@@ -53,7 +53,7 @@
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3 });
             dataGridView1.Location = new Point(97, 557);
-            dataGridView1.Margin = new Padding(6, 6, 6, 6);
+            dataGridView1.Margin = new Padding(6);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidth = 82;
@@ -84,7 +84,7 @@
             // rssLinkSubmitBtn
             // 
             rssLinkSubmitBtn.Location = new Point(364, 158);
-            rssLinkSubmitBtn.Margin = new Padding(6, 6, 6, 6);
+            rssLinkSubmitBtn.Margin = new Padding(6);
             rssLinkSubmitBtn.Name = "rssLinkSubmitBtn";
             rssLinkSubmitBtn.Size = new Size(139, 49);
             rssLinkSubmitBtn.TabIndex = 1;
@@ -95,7 +95,7 @@
             // button2
             // 
             button2.Location = new Point(514, 493);
-            button2.Margin = new Padding(6, 6, 6, 6);
+            button2.Margin = new Padding(6);
             button2.Name = "button2";
             button2.Size = new Size(139, 49);
             button2.TabIndex = 2;
@@ -106,7 +106,7 @@
             // button3
             // 
             button3.Location = new Point(864, 348);
-            button3.Margin = new Padding(6, 6, 6, 6);
+            button3.Margin = new Padding(6);
             button3.Name = "button3";
             button3.Size = new Size(139, 49);
             button3.TabIndex = 3;
@@ -116,7 +116,7 @@
             // button4
             // 
             button4.Location = new Point(1014, 348);
-            button4.Margin = new Padding(6, 6, 6, 6);
+            button4.Margin = new Padding(6);
             button4.Name = "button4";
             button4.Size = new Size(139, 49);
             button4.TabIndex = 4;
@@ -126,7 +126,7 @@
             // textBox1
             // 
             textBox1.Location = new Point(97, 495);
-            textBox1.Margin = new Padding(6, 6, 6, 6);
+            textBox1.Margin = new Padding(6);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(403, 39);
             textBox1.TabIndex = 5;
@@ -135,7 +135,7 @@
             // rssInputField
             // 
             rssInputField.Location = new Point(139, 158);
-            rssInputField.Margin = new Padding(6, 6, 6, 6);
+            rssInputField.Margin = new Padding(6);
             rssInputField.Name = "rssInputField";
             rssInputField.Size = new Size(182, 39);
             rssInputField.TabIndex = 6;
@@ -147,7 +147,7 @@
             dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView2.Columns.AddRange(new DataGridViewColumn[] { Column4, Column5, Column6 });
             dataGridView2.Location = new Point(747, 557);
-            dataGridView2.Margin = new Padding(6, 6, 6, 6);
+            dataGridView2.Margin = new Padding(6);
             dataGridView2.Name = "dataGridView2";
             dataGridView2.RowHeadersVisible = false;
             dataGridView2.RowHeadersWidth = 82;
@@ -178,7 +178,7 @@
             // textBox3
             // 
             textBox3.Location = new Point(747, 493);
-            textBox3.Margin = new Padding(6, 6, 6, 6);
+            textBox3.Margin = new Padding(6);
             textBox3.Name = "textBox3";
             textBox3.Size = new Size(388, 39);
             textBox3.TabIndex = 8;
@@ -200,6 +200,7 @@
             Margin = new Padding(4, 2, 4, 2);
             Name = "Form1";
             Text = "Form1";
+            Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
             ResumeLayout(false);

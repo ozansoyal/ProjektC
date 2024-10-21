@@ -5,23 +5,18 @@ using System.ServiceModel.Syndication;
 
 namespace BL
 {
-    /// <summary>
-    /// Klass som med hjälp av andra klasser och XML hämtar själva datan från RSS och sparar det i 
-    /// en repository.
-    /// </summary>
     public class PoddController
     {
         private PoddRepository poddRepository;
-
+        
         public PoddController()
         {
-            //konstruera en PoddRepository
             poddRepository = new PoddRepository();
         }
 
-        public List<Podd> HämtaAllaPoddar()
+        public List<Podcast> getAllPodcasts()
         {
-            return poddRepository.HämtaAllaPoddar();
+            return poddRepository.getAllPodcasts();
         }
 
         public void getFromRss(string rssLink)
@@ -29,18 +24,38 @@ namespace BL
             XmlReader myXmlReader = XmlReader.Create(rssLink);
             SyndicationFeed poddFeed = SyndicationFeed.Load(myXmlReader);
 
+            // Podcast title
+            string podcastTitle = poddFeed.Title.Text;
+
+            // Collect all episodes
+            List<Episode> episodes = new List<Episode>();
+
             foreach (SyndicationItem item in poddFeed.Items)
             {
-                Podd aPod = new Podd
-                {
-                    Id = item.Id.ToString(),
-                    Rubrik = item.Title.Text
+                // Vad vi sparar och sen kan ta ut. Hittas ej data lägg till ??
+                string episodeId = item.Id ?? "N/A";
+                string episodeTitle = item.Title?.Text ?? "No Title";
+                string episodeDescription = item.Summary?.Text ?? "No Description";
+                DateTimeOffset episodePublishDate = item.PublishDate;
+                string episodeLink = item.Links.FirstOrDefault()?.Uri.ToString() ?? "No Link";
+                string episodeAuthor = item.Authors.FirstOrDefault()?.Name ?? "Unknown Author";
 
-                    //dataGridView.Rows.Add(item.Title.Text, item.Links[0].Uri.ToString());     eller liknande
+                Episode episode = new Episode(
+                    episodeId,
+                    episodeTitle,
+                    episodeDescription,
+                    episodePublishDate,
+                    episodeLink,
+                    episodeAuthor
+                );
 
-                };
-                poddRepository.LäggTillPodd(aPod);
+                episodes.Add(episode);
             }
+
+        
+            Podcast aPodcast = new Podcast(podcastTitle, episodes);
+
+            poddRepository.addPodcast(aPodcast);
         }
 
     }

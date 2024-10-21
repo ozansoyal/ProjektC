@@ -10,12 +10,12 @@ namespace Datalagring
 {
     public class PoddRepository
     {
-        private List<Podd> poddLista = new List<Podd>();
-        public void LäggTillPodd(Podd podd)
+        private List<Podcast> poddLista = new List<Podcast>();
+        public void addPodcast(Podcast podd)
         {
             poddLista.Add(podd);
         }
-        public List<Podd> HämtaAllaPoddar()
+        public List<Podcast> getAllPodcasts()
         { return poddLista; }
         }
 }

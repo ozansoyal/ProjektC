@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class Kategori
+    public class Category
     {
         public string Name { get; set; }
     }

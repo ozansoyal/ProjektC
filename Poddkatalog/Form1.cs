@@ -32,13 +32,19 @@ namespace Poddkatalog
             //link skall valideras
             //validering.valideraLank(link);
 
-            if (link != null) { 
+            if (link != null)
+            {
                 poddController.getFromRss(link);
                 //Hamnar i poddRepository.poddLista;
             }
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
         {
 
         }
