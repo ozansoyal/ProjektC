@@ -11,16 +11,14 @@ namespace Models
     public class Podd
     {
         public string Id { get; set; }
-        public string Namn { get; set; }
-        public List<Episode> Avsnitt { get; set;}
+        public string Rubrik { get; set; }
 
-    public Podd() { 
+        public Podd() { 
         }
-        public Podd(string id, string namn) 
+        public Podd(string id, string rubrik) 
         {   
             Id = id;
-            Namn = namn;
-
+            Rubrik = rubrik;
     }
     }
 }
