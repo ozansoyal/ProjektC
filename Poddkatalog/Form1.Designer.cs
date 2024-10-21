@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             dataGridView1 = new DataGridView();
+            Column1 = new DataGridViewTextBoxColumn();
+            Column2 = new DataGridViewTextBoxColumn();
+            Column3 = new DataGridViewTextBoxColumn();
             button1 = new Button();
             button2 = new Button();
             button3 = new Button();
             button4 = new Button();
-            Column1 = new DataGridViewTextBoxColumn();
-            Column2 = new DataGridViewTextBoxColumn();
-            Column3 = new DataGridViewTextBoxColumn();
             textBox1 = new TextBox();
             textBox2 = new TextBox();
             dataGridView2 = new DataGridView();
@@ -58,6 +58,21 @@
             dataGridView1.Size = new Size(344, 189);
             dataGridView1.TabIndex = 0;
             // 
+            // Column1
+            // 
+            Column1.HeaderText = "Namn";
+            Column1.Name = "Column1";
+            // 
+            // Column2
+            // 
+            Column2.HeaderText = "Titel";
+            Column2.Name = "Column2";
+            // 
+            // Column3
+            // 
+            Column3.HeaderText = "Kategori";
+            Column3.Name = "Column3";
+            // 
             // button1
             // 
             button1.Location = new Point(196, 74);
@@ -66,6 +81,7 @@
             button1.TabIndex = 1;
             button1.Text = "button1";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // button2
             // 
@@ -75,6 +91,7 @@
             button2.TabIndex = 2;
             button2.Text = "button2";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // button3
             // 
@@ -94,27 +111,13 @@
             button4.Text = "button4";
             button4.UseVisualStyleBackColor = true;
             // 
-            // Column1
-            // 
-            Column1.HeaderText = "Namn";
-            Column1.Name = "Column1";
-            // 
-            // Column2
-            // 
-            Column2.HeaderText = "Titel";
-            Column2.Name = "Column2";
-            // 
-            // Column3
-            // 
-            Column3.HeaderText = "Kategori";
-            Column3.Name = "Column3";
-            // 
             // textBox1
             // 
             textBox1.Location = new Point(52, 232);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(219, 23);
             textBox1.TabIndex = 5;
+            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // textBox2
             // 
@@ -122,6 +125,7 @@
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(100, 23);
             textBox2.TabIndex = 6;
+            textBox2.TextChanged += textBox2_TextChanged;
             // 
             // dataGridView2
             // 
