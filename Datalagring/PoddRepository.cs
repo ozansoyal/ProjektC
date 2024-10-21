@@ -8,7 +8,7 @@ using Models;
 
 namespace Datalagring
 {
-    public class Repository
+    public class PoddRepository
     {
         private List<Podd> poddLista = new List<Podd>();
         public void LäggTillPodd(Podd podd)
