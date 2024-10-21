@@ -13,12 +13,15 @@ namespace Models
         public string Id { get; set; }
         public string Rubrik { get; set; }
 
+        //public string Kategori { get; set; }
+
         public Podd() { 
         }
         public Podd(string id, string rubrik) 
         {   
             Id = id;
             Rubrik = rubrik;
+            //Kategori = kategori;
     }
     }
 }
