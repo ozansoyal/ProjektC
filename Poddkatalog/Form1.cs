@@ -1,4 +1,6 @@
 using BL;
+using Models;
+using System.Windows.Forms;
 
 namespace Poddkatalog
 {
@@ -45,6 +47,23 @@ namespace Poddkatalog
         }
 
         private void Form1_Load(object sender, EventArgs e)
+        {
+
+            // Example RSS link
+            string rssLink = "https://api.sr.se/api/rss/pod/itunes/34530";
+            poddController.getFromRss(rssLink);
+
+            List<Podcast> podds = poddController.getAllPodcasts();
+
+            foreach (var podd in podds)
+            {
+                //podcastDataGrid.Rows.Add(podd.Title, podd.customTitle, podd.Episode.Count, podd.Category);
+                podcastDataGrid.Rows.Add(podd.Title, podd.Category, podd.Episode.Count);
+
+            }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

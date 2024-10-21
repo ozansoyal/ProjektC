@@ -33,6 +33,7 @@ namespace BL
             foreach (SyndicationItem item in poddFeed.Items)
             {
                 // Vad vi sparar och sen kan ta ut. Hittas ej data lägg till ??
+                // Vi kan välja vilken data vi vill ha kvar, detta är rätt maximerat.
                 string episodeId = item.Id ?? "N/A";
                 string episodeTitle = item.Title?.Text ?? "No Title";
                 string episodeDescription = item.Summary?.Text ?? "No Description";

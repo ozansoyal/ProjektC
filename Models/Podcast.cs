@@ -14,9 +14,9 @@ namespace Models
         public string Category { get; set; }
         public List<Episode> Episode { get; set; }
 
-        public Podcast(string rubrik, List<Episode> episode)
+        public Podcast(string title, List<Episode> episode)
         {
-            Title = rubrik;
+            Title = title;
             Category = null;
             Episode = episode;
         }

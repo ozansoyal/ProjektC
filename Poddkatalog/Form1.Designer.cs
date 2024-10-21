@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            dataGridView1 = new DataGridView();
+            podcastDataGrid = new DataGridView();
             Column1 = new DataGridViewTextBoxColumn();
             Column2 = new DataGridViewTextBoxColumn();
             Column3 = new DataGridViewTextBoxColumn();
@@ -38,27 +38,28 @@
             button4 = new Button();
             textBox1 = new TextBox();
             rssInputField = new TextBox();
-            dataGridView2 = new DataGridView();
+            episodeDataGrid = new DataGridView();
             Column4 = new DataGridViewTextBoxColumn();
             Column5 = new DataGridViewTextBoxColumn();
             Column6 = new DataGridViewTextBoxColumn();
             textBox3 = new TextBox();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)podcastDataGrid).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)episodeDataGrid).BeginInit();
             SuspendLayout();
             // 
-            // dataGridView1
+            // podcastDataGrid
             // 
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3 });
-            dataGridView1.Location = new Point(97, 557);
-            dataGridView1.Margin = new Padding(6);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersVisible = false;
-            dataGridView1.RowHeadersWidth = 82;
-            dataGridView1.Size = new Size(639, 403);
-            dataGridView1.TabIndex = 0;
+            podcastDataGrid.AllowUserToAddRows = false;
+            podcastDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            podcastDataGrid.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3 });
+            podcastDataGrid.Location = new Point(97, 557);
+            podcastDataGrid.Margin = new Padding(6);
+            podcastDataGrid.Name = "podcastDataGrid";
+            podcastDataGrid.RowHeadersVisible = false;
+            podcastDataGrid.RowHeadersWidth = 82;
+            podcastDataGrid.Size = new Size(639, 403);
+            podcastDataGrid.TabIndex = 0;
+            podcastDataGrid.CellContentClick += dataGridView1_CellContentClick;
             // 
             // Column1
             // 
@@ -141,18 +142,18 @@
             rssInputField.TabIndex = 6;
             rssInputField.TextChanged += textBox2_TextChanged;
             // 
-            // dataGridView2
+            // episodeDataGrid
             // 
-            dataGridView2.AllowUserToAddRows = false;
-            dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView2.Columns.AddRange(new DataGridViewColumn[] { Column4, Column5, Column6 });
-            dataGridView2.Location = new Point(747, 557);
-            dataGridView2.Margin = new Padding(6);
-            dataGridView2.Name = "dataGridView2";
-            dataGridView2.RowHeadersVisible = false;
-            dataGridView2.RowHeadersWidth = 82;
-            dataGridView2.Size = new Size(637, 403);
-            dataGridView2.TabIndex = 7;
+            episodeDataGrid.AllowUserToAddRows = false;
+            episodeDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            episodeDataGrid.Columns.AddRange(new DataGridViewColumn[] { Column4, Column5, Column6 });
+            episodeDataGrid.Location = new Point(747, 557);
+            episodeDataGrid.Margin = new Padding(6);
+            episodeDataGrid.Name = "episodeDataGrid";
+            episodeDataGrid.RowHeadersVisible = false;
+            episodeDataGrid.RowHeadersWidth = 82;
+            episodeDataGrid.Size = new Size(637, 403);
+            episodeDataGrid.TabIndex = 7;
             // 
             // Column4
             // 
@@ -189,27 +190,27 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1499, 1056);
             Controls.Add(textBox3);
-            Controls.Add(dataGridView2);
+            Controls.Add(episodeDataGrid);
             Controls.Add(rssInputField);
             Controls.Add(textBox1);
             Controls.Add(button4);
             Controls.Add(button3);
             Controls.Add(button2);
             Controls.Add(rssLinkSubmitBtn);
-            Controls.Add(dataGridView1);
+            Controls.Add(podcastDataGrid);
             Margin = new Padding(4, 2, 4, 2);
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)podcastDataGrid).EndInit();
+            ((System.ComponentModel.ISupportInitialize)episodeDataGrid).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private DataGridView dataGridView1;
+        private DataGridView podcastDataGrid;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
         private DataGridViewTextBoxColumn Column3;
@@ -219,7 +220,7 @@
         private Button button4;
         private TextBox textBox1;
         private TextBox rssInputField;
-        private DataGridView dataGridView2;
+        private DataGridView episodeDataGrid;
         private DataGridViewTextBoxColumn Column4;
         private DataGridViewTextBoxColumn Column5;
         private DataGridViewTextBoxColumn Column6;
