@@ -34,7 +34,7 @@ namespace PodcastCatalogue
             rssLinkSubmitBtn = new Button();
             button2 = new Button();
             button3 = new Button();
-            button4 = new Button();
+            editWindowBtn = new Button();
             poddSearchField = new TextBox();
             rssInputField = new TextBox();
             episodeDataGrid = new DataGridView();
@@ -96,15 +96,17 @@ namespace PodcastCatalogue
             button3.Text = "button3";
             button3.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // editWindowBtn
             // 
-            button4.Location = new Point(1150, 331);
-            button4.Margin = new Padding(6);
-            button4.Name = "button4";
-            button4.Size = new Size(139, 49);
-            button4.TabIndex = 4;
-            button4.Text = "button4";
-            button4.UseVisualStyleBackColor = true;
+            editWindowBtn.Cursor = Cursors.Hand;
+            editWindowBtn.Location = new Point(1301, 491);
+            editWindowBtn.Margin = new Padding(6);
+            editWindowBtn.Name = "editWindowBtn";
+            editWindowBtn.Size = new Size(139, 49);
+            editWindowBtn.TabIndex = 4;
+            editWindowBtn.Text = "Edit";
+            editWindowBtn.UseVisualStyleBackColor = true;
+            editWindowBtn.Click += editWindowBtn_Click;
             // 
             // poddSearchField
             // 
@@ -161,7 +163,7 @@ namespace PodcastCatalogue
             Controls.Add(episodeDataGrid);
             Controls.Add(rssInputField);
             Controls.Add(poddSearchField);
-            Controls.Add(button4);
+            Controls.Add(editWindowBtn);
             Controls.Add(button3);
             Controls.Add(button2);
             Controls.Add(rssLinkSubmitBtn);
@@ -182,7 +184,7 @@ namespace PodcastCatalogue
         private Button rssLinkSubmitBtn;
         private Button button2;
         private Button button3;
-        private Button button4;
+        private Button editWindowBtn;
         private TextBox poddSearchField;
         private TextBox rssInputField;
         private DataGridView episodeDataGrid;

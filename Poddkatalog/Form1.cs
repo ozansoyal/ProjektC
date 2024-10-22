@@ -1,4 +1,5 @@
 using BL;
+using Datalagring;
 using Models;
 using System.ComponentModel.DataAnnotations;
 using System.Windows.Forms;
@@ -12,6 +13,7 @@ namespace PodcastCatalogue
 
         //Validering validering
         private Validator validator;
+        private PoddRepository poddRepository;
 
         public Form1()
         {
@@ -62,10 +64,12 @@ namespace PodcastCatalogue
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            // Hardcoded RSS links, till för att testa
             string rssLink = "https://api.sr.se/api/rss/pod/itunes/34530";
             poddController.getFromRss(rssLink);
             rssLink = "https://feed.pod.space/thisis40";
             poddController.getFromRss(rssLink);
+
             List<Podcast> podds = poddController.getAllPodcasts();
             podcastDataGrid.DataSource = podds;  // Set the data source directly
         }
@@ -85,6 +89,21 @@ namespace PodcastCatalogue
         private void podcastDataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void editWindowBtn_Click(object sender, EventArgs e)
+        {
+
+            if (podcastDataGrid.CurrentRow != null)
+            {
+                Podcast selectedPodcast = (Podcast)podcastDataGrid.CurrentRow.DataBoundItem;
+                if (selectedPodcast != null)
+                {
+                    Form2 form2 = new Form2(selectedPodcast, poddRepository);
+                    form2.Show();
+                }
+
+            }
         }
     }
 }
