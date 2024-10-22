@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,17 @@ namespace PodcastCatalogue
 {
     public partial class Form2 : Form
     {
-        public Form2()
+        Podcast podcast;
+        public Form2(Podcast podcast)
         {
+            this.podcast = podcast;
             InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.podcast.Title = textBox1.Text;
+            this.podcast.Category = textBox2.Text;
         }
     }
 }
