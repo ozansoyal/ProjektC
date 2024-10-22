@@ -16,7 +16,7 @@ namespace PodcastCatalogue
         public Form1()
         {
             InitializeComponent();
-            Validator validator = new Validator();
+             validator = new Validator();
             poddController = new PoddController();
             //validering = new Validering();
 
@@ -39,8 +39,7 @@ namespace PodcastCatalogue
             string link = rssInputField.Text;
             MessageBox.Show(link);
 
-            //link skall valideras
-            //validering.valideraLank(link);
+           
 
             if (validator.ValidateRssLink(link))
             {

@@ -83,7 +83,7 @@
             // 
             // rssLinkSubmitBtn
             // 
-            rssLinkSubmitBtn.Location = new Point(196, 74);
+            rssLinkSubmitBtn.Location = new Point(268, 73);
             rssLinkSubmitBtn.Name = "rssLinkSubmitBtn";
             rssLinkSubmitBtn.Size = new Size(75, 23);
             rssLinkSubmitBtn.TabIndex = 1;
@@ -129,9 +129,9 @@
             // 
             // rssInputField
             // 
-            rssInputField.Location = new Point(75, 74);
+            rssInputField.Location = new Point(12, 74);
             rssInputField.Name = "rssInputField";
-            rssInputField.Size = new Size(100, 23);
+            rssInputField.Size = new Size(250, 23);
             rssInputField.TabIndex = 6;
             rssInputField.TextChanged += textBox2_TextChanged;
             // 
