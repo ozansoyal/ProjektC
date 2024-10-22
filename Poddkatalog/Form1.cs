@@ -5,20 +5,22 @@ using System.Windows.Forms;
 
 namespace PodcastCatalogue
 {
-    public partial class Form1 : Form 
+    public partial class Form1 : Form
     {
 
         PoddController poddController;
 
         //Validering validering
         private Validator validator;
-       
+
         public Form1()
         {
             InitializeComponent();
-            Validator validator = new Validator();
+            validator = new Validator();
             poddController = new PoddController();
-            //validering = new Validering();
+
+            // Hook up the event
+            podcastDataGrid.SelectionChanged += podcastDataGrid_SelectionChanged;
 
 
         }
@@ -60,24 +62,25 @@ namespace PodcastCatalogue
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
-            // Example RSS link
             string rssLink = "https://api.sr.se/api/rss/pod/itunes/34530";
             poddController.getFromRss(rssLink);
-
+            rssLink = "https://feed.pod.space/thisis40";
+            poddController.getFromRss(rssLink);
             List<Podcast> podds = poddController.getAllPodcasts();
+            podcastDataGrid.DataSource = podds;  // Set the data source directly
+        }
 
-            foreach (var podd in podds)
+        private void podcastDataGrid_SelectionChanged(object sender, EventArgs e)
+        {
+            if (podcastDataGrid.CurrentRow != null)
             {
-                //podcastDataGrid.Rows.Add(podd.Title, podd.customTitle, podd.Episode.Count, podd.Category);
-                podcastDataGrid.Rows.Add(podd.Title, podd.Category, podd.Episode.Count);
-
+                Podcast selectedPodcast = (Podcast)podcastDataGrid.CurrentRow.DataBoundItem;
+                if (selectedPodcast != null)
+                {
+                    episodeDataGrid.DataSource = selectedPodcast.Episode;  // Bind the episodes directly
+                }
             }
         }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
     }
-}
+    }
+
