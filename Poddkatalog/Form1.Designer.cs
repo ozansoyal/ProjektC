@@ -62,6 +62,7 @@ namespace PodcastCatalogue
             podcastDataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             podcastDataGrid.Size = new Size(639, 403);
             podcastDataGrid.TabIndex = 0;
+            podcastDataGrid.CellContentClick += podcastDataGrid_CellContentClick;
             // 
             // rssLinkSubmitBtn
             // 
@@ -126,24 +127,22 @@ namespace PodcastCatalogue
             // episodeDataGrid
             // 
             episodeDataGrid.AllowUserToAddRows = false;
-            episodeDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            episodeDataGrid.Location = new Point(747, 557);
-            episodeDataGrid.Margin = new Padding(6);
-            episodeDataGrid.Name = "episodeDataGrid";
-            episodeDataGrid.RowHeadersVisible = false;
-            episodeDataGrid.RowHeadersWidth = 82;
-            episodeDataGrid.Size = new Size(637, 403);
-            episodeDataGrid.TabIndex = 7;
-
             episodeDataGrid.AllowUserToDeleteRows = false;
             episodeDataGrid.AllowUserToResizeColumns = false;
             episodeDataGrid.AllowUserToResizeRows = false;
+            episodeDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             episodeDataGrid.EditMode = DataGridViewEditMode.EditProgrammatically;
-
+            episodeDataGrid.Location = new Point(747, 557);
+            episodeDataGrid.Margin = new Padding(6);
             episodeDataGrid.MultiSelect = false;
+            episodeDataGrid.Name = "episodeDataGrid";
             episodeDataGrid.ReadOnly = true;
+            episodeDataGrid.RowHeadersVisible = false;
+            episodeDataGrid.RowHeadersWidth = 82;
             episodeDataGrid.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             episodeDataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            episodeDataGrid.Size = new Size(637, 403);
+            episodeDataGrid.TabIndex = 7;
             // 
             // textBox3
             // 

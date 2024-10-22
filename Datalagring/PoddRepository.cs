@@ -16,6 +16,11 @@ namespace Datalagring
             poddLista.Add(podd);
         }
 
+        public void removePodcast(Podcast podd)
+        {
+            poddLista.Remove(podd);
+        }
+
         public List<Podcast> getAllPodcasts()
         {
             return poddLista;

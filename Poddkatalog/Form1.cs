@@ -81,6 +81,11 @@ namespace PodcastCatalogue
                 }
             }
         }
+
+        private void podcastDataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
-    }
+}
 
