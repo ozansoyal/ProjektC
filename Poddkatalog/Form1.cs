@@ -1,24 +1,32 @@
 using BL;
 using Models;
+using System.ComponentModel.DataAnnotations;
 using System.Windows.Forms;
 
-namespace Poddkatalog
+namespace PodcastCatalogue
 {
-    public partial class Form1 : Form
+    public partial class Form1 : Form 
     {
 
         PoddController poddController;
+
         //Validering validering
+        private Validator validator;
+       
         public Form1()
         {
+            InitializeComponent();
+            Validator validator = new Validator();
             poddController = new PoddController();
             //validering = new Validering();
-            InitializeComponent();
+
+
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            string text = poddSearchField.Text;
+            validator.ValidateSearchInput(text);
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -34,10 +42,14 @@ namespace Poddkatalog
             //link skall valideras
             //validering.valideraLank(link);
 
-            if (link != null)
+            if (validator.ValidateRssLink(link))
             {
                 poddController.getFromRss(link);
                 //Hamnar i poddRepository.poddLista;
+            }
+            else
+            {
+                MessageBox.Show("Error!!!");
             }
         }
 

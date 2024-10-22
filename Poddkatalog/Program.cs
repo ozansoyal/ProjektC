@@ -1,4 +1,4 @@
-namespace Poddkatalog
+namespace PodcastCatalogue
 {
     internal static class Program
     {
