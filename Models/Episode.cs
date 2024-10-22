@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
+    [Serializable]
     public class Episode
     {
         public string Id { get; set; }

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
+    [Serializable]
     public class Podcast
     {
         public string Title { get; set; }
