@@ -81,7 +81,8 @@ namespace PodcastCatalogue
                 Podcast selectedPodcast = (Podcast)podcastDataGrid.CurrentRow.DataBoundItem;
                 if (selectedPodcast != null)
                 {
-                    episodeDataGrid.DataSource = selectedPodcast.Episode;  // Bind the episodes directly
+                    episodeDataGrid.DataSource = selectedPodcast.Episode;
+
                 }
             }
         }
@@ -104,6 +105,16 @@ namespace PodcastCatalogue
                 }
 
             }
+        }
+
+        private void episodeDesc_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void episodeDataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

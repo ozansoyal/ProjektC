@@ -19,7 +19,7 @@ namespace PodcastCatalogue
 
         private void button1_Click(object sender, EventArgs e)
         {
-            podcast.Title = textBox1.Text;
+            podcast.Name = textBox1.Text;
             podcast.Category = textBox2.Text;
             MessageBox.Show("Changes saved.");
         }
