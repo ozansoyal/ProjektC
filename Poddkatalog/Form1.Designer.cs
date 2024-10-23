@@ -159,17 +159,25 @@ namespace PodcastCatalogue
             // 
             // podcastDesc
             // 
+            podcastDesc.BackColor = Color.White;
+            podcastDesc.Enabled = false;
             podcastDesc.Location = new Point(76, 700);
             podcastDesc.Multiline = true;
             podcastDesc.Name = "podcastDesc";
+            podcastDesc.ReadOnly = true;
             podcastDesc.Size = new Size(631, 195);
             podcastDesc.TabIndex = 9;
+            podcastDesc.TextChanged += podcastDesc_TextChanged;
             // 
             // episodeDesc
             // 
+            episodeDesc.BackColor = Color.White;
+            episodeDesc.Cursor = Cursors.IBeam;
+            episodeDesc.Enabled = false;
             episodeDesc.Location = new Point(866, 700);
             episodeDesc.Multiline = true;
             episodeDesc.Name = "episodeDesc";
+            episodeDesc.ReadOnly = true;
             episodeDesc.Size = new Size(631, 195);
             episodeDesc.TabIndex = 10;
             episodeDesc.TextChanged += episodeDesc_TextChanged;

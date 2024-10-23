@@ -23,6 +23,8 @@ namespace PodcastCatalogue
 
             // Hook up the event
             podcastDataGrid.SelectionChanged += podcastDataGrid_SelectionChanged;
+            episodeDataGrid.SelectionChanged += episodeDataGrid_SelectionChanged;
+
 
 
         }
@@ -72,6 +74,8 @@ namespace PodcastCatalogue
 
             List<Podcast> podds = poddController.getAllPodcasts();
             podcastDataGrid.DataSource = podds;  // Set the data source directly
+
+            episodeDataGrid.Columns["Description"].Visible = false;
         }
 
         private void podcastDataGrid_SelectionChanged(object sender, EventArgs e)
@@ -83,9 +87,50 @@ namespace PodcastCatalogue
                 {
                     episodeDataGrid.DataSource = selectedPodcast.Episode;
 
+                    //TODO
+                    //tag bort allt mellan <a> och </a>
+
+                    string desc = selectedPodcast.Description;
+                    string[] phrasesToRemove = new string[] { "<div>", "</div>", "<p>", "</p>" };
+
+                    foreach (string phrase in phrasesToRemove)
+                    {
+                        desc = desc.Replace(phrase, "").Trim();
+                    }
+
+                    podcastDesc.Text = desc;
+                    
+
                 }
             }
         }
+        private void episodeDataGrid_SelectionChanged(object sender, EventArgs e)
+        {
+            if (episodeDataGrid.CurrentRow != null)
+            {
+
+                Episode selectedEpisode = (Episode)episodeDataGrid.CurrentRow.DataBoundItem;
+                if (selectedEpisode != null)
+                {
+                    //istället för att lägga in den direkt
+
+                    //TODO
+                    //tag bort allt mellan <a> och </a> inkluderar <a> och </a>
+
+                    string desc = selectedEpisode.Description;
+                    string[] phrasesToRemove = new string[] { "<div>", "</div>", "<p>", "</p>" };
+
+                    foreach (string phrase in phrasesToRemove)
+                    {
+                        desc = desc.Replace(phrase, "").Trim();
+                    }
+
+                    episodeDesc.Text = desc;
+                }
+            }
+        }
+
+
 
         private void podcastDataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -113,6 +158,11 @@ namespace PodcastCatalogue
         }
 
         private void episodeDataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void podcastDesc_TextChanged(object sender, EventArgs e)
         {
 
         }

@@ -26,6 +26,7 @@ namespace BL
 
             // Podcast title
             string podcastTitle = poddFeed.Title.Text;
+            string podcastDesc = poddFeed.Description.Text;
 
             // Collect all episodes
             List<Episode> episodes = new List<Episode>();
@@ -34,27 +35,32 @@ namespace BL
             {
                 // Vad vi sparar och sen kan ta ut. Hittas ej data lägg till ??
                 // Vi kan välja vilken data vi vill ha kvar, detta är rätt maximerat.
-                string episodeId = item.Id ?? "N/A";
+              
                 string episodeTitle = item.Title?.Text ?? "No Title";
                 string episodeDescription = item.Summary?.Text ?? "No Description";
                 DateTimeOffset episodePublishDate = item.PublishDate;
                 string episodeLink = item.Links.FirstOrDefault()?.Uri.ToString() ?? "No Link";
-                string episodeAuthor = item.Authors.FirstOrDefault()?.Name ?? "Unknown Author";
+                var durationElement = item.ElementExtensions
+                             .FirstOrDefault(ext => ext.OuterName == "duration");
+                string episodeDuration = durationElement?.GetObject<XmlElement>().InnerText ?? "No Duration";
+
+
 
                 Episode episode = new Episode(
-                    episodeId,
+                   
                     episodeTitle,
                     episodeDescription,
                     episodePublishDate,
                     episodeLink,
-                    episodeAuthor
+                    episodeDuration
+                  
                 );
 
                 episodes.Add(episode);
             }
 
         
-            Podcast aPodcast = new Podcast(podcastTitle, episodes);
+            Podcast aPodcast = new Podcast(podcastTitle, episodes, podcastDesc);
 
             poddRepository.addPodcast(aPodcast);
         }

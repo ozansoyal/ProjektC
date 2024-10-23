@@ -17,15 +17,19 @@ namespace Models
         public List<Episode> Episode { get; set; }
         public int Count { get; set; }
 
-       
+        public string Description { get; set; }
 
-        public Podcast(string title, List<Episode> episode)
+
+
+        public Podcast(string title, List<Episode> episode, string description)
         {
             Title = title;
             Name = null;
             Category = null;
             Episode = episode;
             Count = episode.Count;
+            Description = description;
+
 
         }
     }
