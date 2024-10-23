@@ -18,21 +18,17 @@ namespace PodcastCatalogue
             
             public bool ValidateRssLink(string link)
             {
-            if (!link.StartsWith("http://") && !link.StartsWith("https://"))
+            MessageBox.Show(link);
+            if (link.StartsWith("http") || link.StartsWith("https"))
             {
-                MessageBox.Show("Rss feed has to start with http:// or https://"); 
+                return true;
             }
+            else
+            {
+                MessageBox.Show("Rss feed has to start with http:// or https://");
 
-                try
-                {
-                    XmlReader myXmlReader = XmlReader.Create(link);
-                    SyndicationFeed poddFeed = SyndicationFeed.Load(myXmlReader);
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
+                return false;
+            }
             
         }
        

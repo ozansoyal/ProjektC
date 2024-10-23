@@ -1,6 +1,7 @@
 using BL;
 using Datalagring;
 using Models;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Windows.Forms;
 
@@ -40,22 +41,33 @@ namespace PodcastCatalogue
 
         }
 
+        private void RefreshPodcastDataGrid(List<Podcast> podds)
+        {
+            podds = poddController.getAllPodcasts();
+            podcastDataGrid.DataSource = null;
+            podcastDataGrid.DataSource = podds;
+            episodeDataGrid.Columns["Description"].Visible = false;
+
+        }
+
         private void rssLinkSubmitBtn_Click(object sender, EventArgs e)
         {
-            string link = rssInputField.Text;
+            string link = rssInputField.Text.Trim();
             MessageBox.Show(link);
-
-            //link skall valideras
-            //validering.valideraLank(link);
-
             if (validator.ValidateRssLink(link))
             {
                 poddController.getFromRss(link);
-                //Hamnar i poddRepository.poddLista;
+                List<Podcast> podds = poddController.getAllPodcasts();
+                RefreshPodcastDataGrid(podds);
+
+
+
+
             }
             else
             {
                 MessageBox.Show("Error!!!");
+
             }
         }
 
@@ -73,9 +85,8 @@ namespace PodcastCatalogue
             poddController.getFromRss(rssLink);
 
             List<Podcast> podds = poddController.getAllPodcasts();
-            podcastDataGrid.DataSource = podds;  // Set the data source directly
 
-            episodeDataGrid.Columns["Description"].Visible = false;
+            RefreshPodcastDataGrid(podds);
         }
 
         private void podcastDataGrid_SelectionChanged(object sender, EventArgs e)
