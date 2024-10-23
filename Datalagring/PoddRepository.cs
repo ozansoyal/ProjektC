@@ -36,7 +36,7 @@ namespace Datalagring
             }
         }
 
-       
+
         public void LäsFrånFil()
         {
             if (File.Exists(xmlFilnamn))
