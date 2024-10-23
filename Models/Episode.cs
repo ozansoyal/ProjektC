@@ -27,6 +27,7 @@ namespace Models
             Link = link;
             Duration = duration;
         }
+        public Episode() { }
     }
 
 }

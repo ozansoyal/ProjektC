@@ -26,18 +26,17 @@ namespace Datalagring
             return poddLista;
         }
 
-        
-        public void SparaTillFil()
+
+        public void SparaTillFil(List<Podcast> podds)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(List<Podcast>));
             using (FileStream fs = new FileStream(xmlFilnamn, FileMode.Create))
             {
-                serializer.Serialize(fs, poddLista);
+                serializer.Serialize(fs, podds);
             }
         }
 
-
-        public void LäsFrånFil()
+        public List<Podcast> LäsFrånFil()
         {
             if (File.Exists(xmlFilnamn))
             {
@@ -47,6 +46,10 @@ namespace Datalagring
                     poddLista = (List<Podcast>)serializer.Deserialize(fs);
                 }
             }
+            return poddLista; // Returnera den inlästa listan
         }
     }
 }
+
+
+

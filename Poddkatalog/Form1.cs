@@ -63,7 +63,7 @@ namespace PodcastCatalogue
                 poddController.getFromRss(link);
                 List<Podcast> podds = poddController.getAllPodcasts();
                 RefreshPodcastDataGrid(podds);
-                poddRepository.SparaTillFil();
+                poddRepository.SparaTillFil(podds);
 
             }
             else
@@ -82,15 +82,17 @@ namespace PodcastCatalogue
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            poddRepository.LäsFrånFil();
+
             // Hardcoded RSS links, till för att testa
-            string rssLink = "https://api.sr.se/api/rss/pod/itunes/34530";
-            poddController.getFromRss(rssLink);
-            rssLink = "https://feed.pod.space/thisis40";
-            poddController.getFromRss(rssLink);
-            List<Podcast> podds = poddController.getAllPodcasts();
+            // string rssLink = "https://api.sr.se/api/rss/pod/itunes/34530";
+            // poddController.getFromRss(rssLink);
+            //rssLink = "https://feed.pod.space/thisis40";
+            // poddController.getFromRss(rssLink);
+            List<Podcast> podds = poddRepository.LäsFrånFil();
 
             RefreshPodcastDataGrid(podds);
+            
+            
         }
 
         
