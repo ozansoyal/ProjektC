@@ -18,6 +18,10 @@ namespace Models
         public string Duration { get; set; }
 
         public string Link { get; set; }
+
+        //tomm konstruktor
+        public Episode() { }
+
         public Episode(string title, string description, DateTimeOffset publishDate, string link, string duration)
         { 
             
@@ -27,7 +31,6 @@ namespace Models
             Link = link;
             Duration = duration;
         }
-        public Episode() { }
     }
 
 }

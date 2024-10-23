@@ -44,7 +44,7 @@ namespace PodcastCatalogue
 
         private void RefreshPodcastDataGrid(List<Podcast> podds)
         {
-            podds = poddController.getAllPodcasts();
+           
             podcastDataGrid.DataSource = null;
             podcastDataGrid.DataSource = podds;
             episodeDataGrid.Columns["Description"].Visible = false;
@@ -57,7 +57,6 @@ namespace PodcastCatalogue
         private void rssLinkSubmitBtn_Click(object sender, EventArgs e)
         {
             string link = rssInputField.Text.Trim();
-            MessageBox.Show(link);
             if (validator.ValidateRssLink(link))
             {
                 poddController.getFromRss(link);
@@ -83,11 +82,11 @@ namespace PodcastCatalogue
         private void Form1_Load(object sender, EventArgs e)
         {
 
-            // Hardcoded RSS links, till för att testa
-            // string rssLink = "https://api.sr.se/api/rss/pod/itunes/34530";
-            // poddController.getFromRss(rssLink);
+            //Hardcoded RSS links, till för att testa
+            //string rssLink = "https://api.sr.se/api/rss/pod/itunes/34530";
+            //poddController.getFromRss(rssLink);
             //rssLink = "https://feed.pod.space/thisis40";
-            // poddController.getFromRss(rssLink);
+            //poddController.getFromRss(rssLink);
             List<Podcast> podds = poddRepository.LäsFrånFil();
 
             RefreshPodcastDataGrid(podds);

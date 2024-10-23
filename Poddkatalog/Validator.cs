@@ -18,7 +18,6 @@ namespace PodcastCatalogue
             
             public bool ValidateRssLink(string link)
             {
-            MessageBox.Show(link);
             if (link.StartsWith("http") || link.StartsWith("https"))
             {
                 return true;

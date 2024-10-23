@@ -1,53 +1,71 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Xml.Serialization;
-using Models;
+﻿    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Xml.Serialization;
+    using Models;
 
-namespace Datalagring
-{
-    public class PoddRepository
+    namespace Datalagring
     {
-        private List<Podcast> poddLista = new List<Podcast>();
-        private readonly string xmlFilnamn = "poddar.xml"; // Fil där poddar sparas
-
-        public void addPodcast(Podcast podd)
+        public class PoddRepository
         {
-            poddLista.Add(podd);
-        }
+            private List<Podcast> poddLista = new List<Podcast>();
+            private readonly string xmlFilnamn = "poddar.xml"; // Fil där poddar sparas
 
-        public void removePodcast(Podcast podd)
-        {
-            poddLista.Remove(podd);
-        }
-
-        public List<Podcast> getAllPodcasts()
-        {
-            return poddLista;
-        }
-
-
-        public void SparaTillFil(List<Podcast> podds)
-        {
-            XmlSerializer serializer = new XmlSerializer(typeof(List<Podcast>));
-            using (FileStream fs = new FileStream(xmlFilnamn, FileMode.Create))
+            public void addPodcast(Podcast podd)
             {
-                serializer.Serialize(fs, podds);
+                poddLista.Add(podd);
             }
-        }
+
+            public void removePodcast(Podcast podd)
+            {
+                poddLista.Remove(podd);
+            }
+
+            public List<Podcast> getAllPodcasts()
+            {
+                return poddLista;
+            }
+
+
+            public void SparaTillFil(List<Podcast> podds)
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(List<Podcast>));
+                using (FileStream fs = new FileStream(xmlFilnamn, FileMode.Create))
+                {
+                    serializer.Serialize(fs, podds);
+                }
+            }
 
         public List<Podcast> LäsFrånFil()
         {
             if (File.Exists(xmlFilnamn))
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(List<Podcast>));
-                using (FileStream fs = new FileStream(xmlFilnamn, FileMode.Open))
+                try
                 {
-                    poddLista = (List<Podcast>)serializer.Deserialize(fs);
+                    XmlSerializer serializer = new XmlSerializer(typeof(List<Podcast>));
+                    using (FileStream fs = new FileStream(xmlFilnamn, FileMode.Open))
+                    {
+                        poddLista = (List<Podcast>)serializer.Deserialize(fs);
+                    }
+
+                    if (poddLista == null || poddLista.Count == 0)
+                    {
+                        Console.WriteLine("Deserialization resulted in an empty list.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error reading file: {ex.Message}");
                 }
             }
-            return poddLista; // Returnera den inlästa listan
+            else
+            {
+                Console.WriteLine("File not found.");
+            }
+
+            return poddLista; // Return the read list
         }
+
     }
 }
 
