@@ -15,6 +15,7 @@ namespace PodcastCatalogue
         //Validering validering
         private Validator validator;
         private PoddRepository poddRepository;
+        private List<Podcast> podds;
 
         public Form1()
         {
@@ -42,16 +43,19 @@ namespace PodcastCatalogue
 
         }
 
-        private void RefreshPodcastDataGrid(List<Podcast> podds)
+        private void RefreshPodcastDataGrid()
         {
-           
+            podds = poddRepository.LäsFrånFil();
             podcastDataGrid.DataSource = null;
             podcastDataGrid.DataSource = podds;
-            episodeDataGrid.Columns["Description"].Visible = false;
-
+            if (episodeDataGrid.Columns.Count > 0)
+            {
+                episodeDataGrid.Columns["Description"].Visible = false;
+            }
         }
 
-        
+
+
 
 
         private void rssLinkSubmitBtn_Click(object sender, EventArgs e)
@@ -59,10 +63,8 @@ namespace PodcastCatalogue
             string link = rssInputField.Text.Trim();
             if (validator.ValidateRssLink(link))
             {
-                poddController.getFromRss(link);
-                List<Podcast> podds = poddController.getAllPodcasts();
-                RefreshPodcastDataGrid(podds);
-                poddRepository.SparaTillFil(podds);
+                poddRepository.addPodcast(poddController.getFromRss(link)); //Lägger till i listan
+                RefreshPodcastDataGrid();
 
             }
             else
@@ -87,9 +89,9 @@ namespace PodcastCatalogue
             //poddController.getFromRss(rssLink);
             //rssLink = "https://feed.pod.space/thisis40";
             //poddController.getFromRss(rssLink);
-            List<Podcast> podds = poddRepository.LäsFrånFil();
+            podds = poddRepository.LäsFrånFil();          //första som måste ske är att vi läser från filen, annars riskerar vi att förlora all data
 
-            RefreshPodcastDataGrid(podds);
+            RefreshPodcastDataGrid();
             
             
         }

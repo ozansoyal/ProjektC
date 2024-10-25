@@ -8,22 +8,44 @@
     {
         public class PoddRepository
         {
-            private List<Podcast> poddLista = new List<Podcast>();
+            private List<Podcast> podcastList = new List<Podcast>();
             private readonly string xmlFilnamn = "poddar.xml"; // Fil där poddar sparas
+            public bool podcastAdded = false;
 
-            public void addPodcast(Podcast podd)
+        public void addPodcast(Podcast podd)
+        {
+
+            if (podcastList.Count == 0)
             {
-                poddLista.Add(podd);
+                podcastList.Add(podd);
+                SparaTillFil(podcastList);
             }
+            else { 
+            foreach (Podcast p in podcastList)
+            {
+                if (p.Title == podd.Title)
+                {
+                    throw new Exception("Podcast already exists.");
+                }
+                else
+                {
+                    podcastList.Add(podd);
+                    SparaTillFil(podcastList);
+                        podcastAdded = true;
+                }
+                    if (podcastAdded == true) { break; }
+                }
+            }
+        }
 
             public void removePodcast(Podcast podd)
             {
-                poddLista.Remove(podd);
+                podcastList.Remove(podd);
             }
 
-            public List<Podcast> getAllPodcasts()
+            public List<Podcast> getPodcastList()
             {
-                return poddLista;
+                return podcastList;
             }
 
 
@@ -45,10 +67,10 @@
                     XmlSerializer serializer = new XmlSerializer(typeof(List<Podcast>));
                     using (FileStream fs = new FileStream(xmlFilnamn, FileMode.Open))
                     {
-                        poddLista = (List<Podcast>)serializer.Deserialize(fs);
+                        podcastList = (List<Podcast>)serializer.Deserialize(fs);
                     }
 
-                    if (poddLista == null || poddLista.Count == 0)
+                    if (podcastList == null || podcastList.Count == 0)
                     {
                         Console.WriteLine("Deserialization resulted in an empty list.");
                     }
@@ -56,18 +78,22 @@
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Error reading file: {ex.Message}");
+                    using (FileStream fs = new FileStream(xmlFilnamn, FileMode.Create)) ;
+
                 }
             }
             else
             {
-                Console.WriteLine("File not found.");
+                using (FileStream fs = new FileStream(xmlFilnamn, FileMode.Create)) ;
             }
 
-            return poddLista; // Return the read list
+            return podcastList; // Return the read list
         }
 
     }
+     
 }
+
 
 
 
