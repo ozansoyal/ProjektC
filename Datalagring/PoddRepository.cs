@@ -10,35 +10,24 @@
         {
             private List<Podcast> podcastList = new List<Podcast>();
             private readonly string xmlFilnamn = "poddar.xml"; // Fil där poddar sparas
-            public bool podcastAdded = false;
+           
 
         public void addPodcast(Podcast podd)
         {
-
-            if (podcastList.Count == 0)
-            {
-                podcastList.Add(podd);
-                SparaTillFil(podcastList);
-            }
-            else { 
             foreach (Podcast p in podcastList)
             {
                 if (p.Title == podd.Title)
                 {
                     throw new Exception("Podcast already exists.");
                 }
-                else
-                {
-                    podcastList.Add(podd);
-                    SparaTillFil(podcastList);
-                        podcastAdded = true;
-                }
-                    if (podcastAdded == true) { break; }
-                }
             }
+
+            podcastList.Add(podd);
+            SparaTillFil(podcastList);
+        
         }
 
-            public void removePodcast(Podcast podd)
+        public void removePodcast(Podcast podd)
             {
                 podcastList.Remove(podd);
             }
