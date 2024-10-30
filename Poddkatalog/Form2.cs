@@ -9,11 +9,13 @@ namespace PodcastCatalogue
     {
         private Podcast podcast;
         private PoddRepository poddRepository;
+        private Form1 mainForm;
 
-        public Form2(Podcast podcast, PoddRepository poddRepository)
+        public Form2(Podcast podcast, PoddRepository poddRepository, Form1 mainForm)
         {
             this.podcast = podcast;
             this.poddRepository = poddRepository;
+            this.mainForm = mainForm;
             InitializeComponent();
         }
 
@@ -26,9 +28,12 @@ namespace PodcastCatalogue
 
         private void removePodcastBtn_Click(object sender, EventArgs e)
         {
+
+            string podcastTitle = podcast.Title;
             poddRepository.removePodcast(podcast);
-            MessageBox.Show($"{podcast.Title} has been removed.");
-            Form2.ActiveForm.Close();
+            mainForm.RefreshPodcastDataGrid();
+            MessageBox.Show($"{podcastTitle} has been removed.");
+            this.Close();
         }
 
         private void Form2_Load(object sender, EventArgs e)

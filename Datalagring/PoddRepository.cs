@@ -23,14 +23,14 @@
             }
 
             podcastList.Add(podd);
-            SparaTillFil(podcastList);
-        
+            SparaTillFil(podcastList);   
         }
 
         public void removePodcast(Podcast podd)
             {
                 podcastList.Remove(podd);
-            }
+                SparaTillFil(podcastList);
+        }
 
             public List<Podcast> getPodcastList()
             {

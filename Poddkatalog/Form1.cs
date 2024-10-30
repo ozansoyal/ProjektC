@@ -43,7 +43,7 @@ namespace PodcastCatalogue
 
         }
 
-        private void RefreshPodcastDataGrid()
+        public void RefreshPodcastDataGrid()
         {
             podds = poddRepository.LäsFrånFil();
             podcastDataGrid.DataSource = null;
@@ -96,36 +96,42 @@ namespace PodcastCatalogue
             
         }
 
-        
+
 
 
 
         private void podcastDataGrid_SelectionChanged(object sender, EventArgs e)
         {
-            if (podcastDataGrid.CurrentRow != null)
+            if (podcastDataGrid.CurrentRow.Index != 0)
             {
                 Podcast selectedPodcast = (Podcast)podcastDataGrid.CurrentRow.DataBoundItem;
                 if (selectedPodcast != null)
                 {
                     episodeDataGrid.DataSource = selectedPodcast.Episode;
 
-                    //TODO
-                    //tag bort allt mellan <a> och </a>
-
+                    // Remove everything between <a> and </a> including the tags
                     string desc = selectedPodcast.Description;
-                    string[] phrasesToRemove = new string[] { "<div>", "</div>", "<p>", "</p>" };
+                    desc = System.Text.RegularExpressions.Regex.Replace(desc, @"<a[^>]*>.*?</a>", "", System.Text.RegularExpressions.RegexOptions.Singleline).Trim();
 
+                    // Remove specific HTML tags including <br>, <hr>, <p style="...">
+                    string[] phrasesToRemove = new string[] { "<div>", "</div>", "<br>", "<hr>" };
                     foreach (string phrase in phrasesToRemove)
                     {
                         desc = desc.Replace(phrase, "").Trim();
                     }
 
-                    podcastDesc.Text = desc;
-                    
+                    // Remove <p style="..."> tags
+                    desc = System.Text.RegularExpressions.Regex.Replace(desc, @"<p[^>]*>", "").Trim();
 
+                    podcastDesc.Text = desc;
                 }
             }
         }
+
+
+
+
+
         private void episodeDataGrid_SelectionChanged(object sender, EventArgs e)
         {
             if (episodeDataGrid.CurrentRow != null)
@@ -161,16 +167,20 @@ namespace PodcastCatalogue
 
         private void editWindowBtn_Click(object sender, EventArgs e)
         {
-
-            if (podcastDataGrid.CurrentRow != null)
+            try { 
+            Podcast selectedPodcast = (Podcast)podcastDataGrid.CurrentRow.DataBoundItem;
+            if (selectedPodcast != null)
             {
-                Podcast selectedPodcast = (Podcast)podcastDataGrid.CurrentRow.DataBoundItem;
                 if (selectedPodcast != null)
                 {
-                    Form2 form2 = new Form2(selectedPodcast, poddRepository);
+                    Form2 form2 = new Form2(selectedPodcast, poddRepository, this);
                     form2.Show();
                 }
 
+            }
+            }
+            catch(Exception ex) {
+                MessageBox.Show("Error: Podcast lista är tom");
             }
         }
 
