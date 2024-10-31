@@ -12,10 +12,10 @@ namespace PodcastCatalogue
 
         PoddController poddController;
 
-        //Validering validering
         private Validator validator;
         private PoddRepository poddRepository;
         private List<Podcast> podds;
+        private List<Category> categories;
 
         public Form1()
         {
@@ -24,7 +24,6 @@ namespace PodcastCatalogue
             poddController = new PoddController();
             poddRepository = new PoddRepository();
 
-            // Hook up the event
             podcastDataGrid.SelectionChanged += podcastDataGrid_SelectionChanged;
             episodeDataGrid.SelectionChanged += episodeDataGrid_SelectionChanged;
 
@@ -38,14 +37,16 @@ namespace PodcastCatalogue
             validator.ValidateSearchInput(text);
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void poddSearchField_TextChanged(object sender, EventArgs e)
         {
-
+            string searchText = poddSearchField.Text;
+            FilterPodcastsByTitle(searchText);
         }
 
         public void RefreshPodcastDataGrid()
         {
-            podds = poddRepository.LäsFrånFil();
+            var appData = poddRepository.ReadFromFile();
+            podds = appData.Podcasts;
             podcastDataGrid.DataSource = null;
             podcastDataGrid.DataSource = podds;
             if (episodeDataGrid.Columns.Count > 0)
@@ -58,12 +59,13 @@ namespace PodcastCatalogue
 
 
 
+
         private void rssLinkSubmitBtn_Click(object sender, EventArgs e)
         {
             string link = rssInputField.Text.Trim();
             if (validator.ValidateRssLink(link))
             {
-                poddRepository.addPodcast(poddController.getFromRss(link)); //Lägger till i listan
+                poddRepository.AddPodcast(poddController.getFromRss(link)); //Lägger till i listan
                 RefreshPodcastDataGrid();
 
             }
@@ -73,7 +75,7 @@ namespace PodcastCatalogue
             }
         }
 
-       
+
 
 
         private void textBox2_TextChanged(object sender, EventArgs e)
@@ -83,49 +85,14 @@ namespace PodcastCatalogue
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
-            //Hardcoded RSS links, till för att testa
-            //string rssLink = "https://api.sr.se/api/rss/pod/itunes/34530";
-            //poddController.getFromRss(rssLink);
-            //rssLink = "https://feed.pod.space/thisis40";
-            //poddController.getFromRss(rssLink);
-            podds = poddRepository.LäsFrånFil();          //första som måste ske är att vi läser från filen, annars riskerar vi att förlora all data
+            var appData = poddRepository.ReadFromFile();
+            podds = appData.Podcasts;
+            var categories = appData.Categories;
 
             RefreshPodcastDataGrid();
-            
-            
-        }
 
-
-
-
-
-        private void podcastDataGrid_SelectionChanged(object sender, EventArgs e)
-        {
-            if (podcastDataGrid.CurrentRow.Index != 0)
-            {
-                Podcast selectedPodcast = (Podcast)podcastDataGrid.CurrentRow.DataBoundItem;
-                if (selectedPodcast != null)
-                {
-                    episodeDataGrid.DataSource = selectedPodcast.Episode;
-
-                    // Remove everything between <a> and </a> including the tags
-                    string desc = selectedPodcast.Description;
-                    desc = System.Text.RegularExpressions.Regex.Replace(desc, @"<a[^>]*>.*?</a>", "", System.Text.RegularExpressions.RegexOptions.Singleline).Trim();
-
-                    // Remove specific HTML tags including <br>, <hr>, <p style="...">
-                    string[] phrasesToRemove = new string[] { "<div>", "</div>", "<br>", "<hr>" };
-                    foreach (string phrase in phrasesToRemove)
-                    {
-                        desc = desc.Replace(phrase, "").Trim();
-                    }
-
-                    // Remove <p style="..."> tags
-                    desc = System.Text.RegularExpressions.Regex.Replace(desc, @"<p[^>]*>", "").Trim();
-
-                    podcastDesc.Text = desc;
-                }
-            }
+            categoryComboBox.DataSource = categories;
+            categoryComboBox.DisplayMember = "Name"; 
         }
 
 
@@ -167,19 +134,21 @@ namespace PodcastCatalogue
 
         private void editWindowBtn_Click(object sender, EventArgs e)
         {
-            try { 
-            Podcast selectedPodcast = (Podcast)podcastDataGrid.CurrentRow.DataBoundItem;
-            if (selectedPodcast != null)
+            try
             {
+                Podcast selectedPodcast = (Podcast)podcastDataGrid.CurrentRow.DataBoundItem;
                 if (selectedPodcast != null)
                 {
-                    Form2 form2 = new Form2(selectedPodcast, poddRepository, this);
-                    form2.Show();
-                }
+                    if (selectedPodcast != null)
+                    {
+                        Form2 form2 = new Form2(selectedPodcast, poddRepository, this);
+                        form2.Show();
+                    }
 
+                }
             }
-            }
-            catch(Exception ex) {
+            catch (Exception ex)
+            {
                 MessageBox.Show("Error: Podcast lista är tom");
             }
         }
@@ -198,6 +167,140 @@ namespace PodcastCatalogue
         {
 
         }
+        public async Task SetEpisodeDatagridNull()
+        {
+            episodeDataGrid.DataSource = null;
+            podcastDesc.Clear();
+            episodeDesc.Clear();
+
+        }
+
+        public async Task RefreshPodcastDataGridAsync()
+        {
+            try
+            {
+                podcastDataGrid.SelectionChanged -= podcastDataGrid_SelectionChanged;
+                var appData = await poddRepository.ReadFromFileAsync();
+                List<Podcast> podds = appData.Podcasts;
+                podcastDataGrid.DataSource = null;
+                podcastDataGrid.DataSource = podds;
+                podcastDataGrid.ClearSelection();
+                if (episodeDataGrid.Columns.Count > 0)
+                {
+                    episodeDataGrid.Columns["Description"].Visible = false;
+                }
+            }
+            finally
+            {
+                podcastDataGrid.SelectionChanged += podcastDataGrid_SelectionChanged;
+            }
+        }
+
+        private void podcastDataGrid_SelectionChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (podcastDataGrid.Rows.Count > 0 && podcastDataGrid.CurrentRow != null)
+                {
+                    Podcast selectedPodcast = (Podcast)podcastDataGrid.CurrentRow.DataBoundItem;
+                    if (selectedPodcast != null)
+                    {
+                        episodeDataGrid.DataSource = selectedPodcast.Episode;
+
+                        // Remove everything between <a> and </a> including the tags
+                        string desc = selectedPodcast.Description;
+                        desc = System.Text.RegularExpressions.Regex.Replace(desc, @"<a[^>]*>.*?</a>", "", System.Text.RegularExpressions.RegexOptions.Singleline).Trim();
+
+                        // Remove specific HTML tags including <br>, <hr>, <p style="...">
+                        string[] phrasesToRemove = new string[] { "<div>", "</div>", "<br>", "<hr>" };
+                        foreach (string phrase in phrasesToRemove)
+                        {
+                            desc = desc.Replace(phrase, "").Trim();
+                        }
+
+                        // Remove <p style="..."> tags
+                        desc = System.Text.RegularExpressions.Regex.Replace(desc, @"<p[^>]*>", "").Trim();
+                        podcastDesc.Text = desc;
+                    }
+                }
+                else
+                {
+                    episodeDataGrid.DataSource = null;
+                    podcastDesc.Clear();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+                Console.WriteLine($"Stack Trace: {ex.StackTrace}");
+                MessageBox.Show($"Error: {ex.Message}\nStack Trace: {ex.StackTrace}");
+            }
+        }
+
+        private void FilterPodcastsByTitle(string title)
+        {
+            if (podds != null && podds.Count > 0)
+            {
+                var filteredPodcasts = podds
+                    .Where(p => p.Title != null && p.Title.ToLower().Contains(title.ToLower()))
+                    .ToList(); // Execute the query
+
+                podcastDataGrid.DataSource = null; // Clear existing data source
+                podcastDataGrid.DataSource = filteredPodcasts; // Set new data source
+            }
+            else
+            {
+                MessageBox.Show("No podcasts available to filter.");
+            }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void addCategoryBtn_Click(object sender, EventArgs e)
+        {
+            if (poddRepository.ReadFromFile().Categories.Count == 0)
+            {
+                Category category = new Category(addCategoryTextbox.Text.Trim());
+                poddRepository.AddCategory(category);
+            }
+            else
+            {
+                foreach (Category c in poddRepository.ReadFromFile().Categories)
+                {
+                    if (c.Name == addCategoryTextbox.Text.Trim())
+                    {
+                        MessageBox.Show("Category already exists");
+                        return;
+                    }
+                }
+                Category category = new Category(addCategoryTextbox.Text.Trim());
+                poddRepository.AddCategory(category);
+                RefreshComboBox();
+            }
+
+
+
+        }
+
+        private void availableCategories_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+        private void RefreshComboBox()
+        {
+            var categories = poddRepository.ReadFromFile().Categories;
+            categoryComboBox.DataSource = null;
+            categoryComboBox.DataSource = categories;
+            categoryComboBox.DisplayMember = "Name";
+            
+        }
+
+        
+
+
     }
 }
 

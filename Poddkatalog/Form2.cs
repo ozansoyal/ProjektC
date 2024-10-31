@@ -23,22 +23,39 @@ namespace PodcastCatalogue
         {
             podcast.Name = textBox1.Text;
             podcast.Category = textBox2.Text;
+            poddRepository.UpdatePodcast(podcast);
             MessageBox.Show("Changes saved.");
-        }
-
-        private void removePodcastBtn_Click(object sender, EventArgs e)
-        {
-
-            string podcastTitle = podcast.Title;
-            poddRepository.removePodcast(podcast);
-            mainForm.RefreshPodcastDataGrid();
-            MessageBox.Show($"{podcastTitle} has been removed.");
-            this.Close();
         }
 
         private void Form2_Load(object sender, EventArgs e)
         {
+            podcastNameLabel.Text = podcast.Title;
+        }
 
+        private async void removePodcastBtn_Click(object sender, EventArgs e)
+        {
+            await RemovePodcastAsync();
+        }
+        private async Task RemovePodcastAsync()
+        {
+            try
+            {
+                string podcastTitle = podcast.Title;
+                await poddRepository.RemovePodcastAsync(podcast);
+                await mainForm.RefreshPodcastDataGridAsync();
+
+                mainForm.podcastDataGrid.ClearSelection();
+
+                MessageBox.Show($"{podcastTitle} has been removed.");
+                await mainForm.SetEpisodeDatagridNull();
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+                Console.WriteLine($"Stack Trace: {ex.StackTrace}");
+                MessageBox.Show($"Error: {ex.Message}\nStack Trace: {ex.StackTrace}");
+            }
         }
     }
 }

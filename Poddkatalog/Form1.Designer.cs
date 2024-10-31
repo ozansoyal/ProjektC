@@ -41,6 +41,9 @@ namespace PodcastCatalogue
             textBox3 = new TextBox();
             podcastDesc = new TextBox();
             episodeDesc = new TextBox();
+            categoryComboBox = new ComboBox();
+            addCategoryTextbox = new TextBox();
+            addCategoryBtn = new Button();
             ((System.ComponentModel.ISupportInitialize)podcastDataGrid).BeginInit();
             ((System.ComponentModel.ISupportInitialize)episodeDataGrid).BeginInit();
             SuspendLayout();
@@ -117,7 +120,7 @@ namespace PodcastCatalogue
             poddSearchField.Name = "poddSearchField";
             poddSearchField.Size = new Size(403, 39);
             poddSearchField.TabIndex = 5;
-            poddSearchField.TextChanged += textBox1_TextChanged;
+            poddSearchField.TextChanged += poddSearchField_TextChanged;
             // 
             // rssInputField
             // 
@@ -182,11 +185,41 @@ namespace PodcastCatalogue
             episodeDesc.TabIndex = 10;
             episodeDesc.TextChanged += episodeDesc_TextChanged;
             // 
+            // categoryComboBox
+            // 
+            categoryComboBox.FormattingEnabled = true;
+            categoryComboBox.Location = new Point(891, 98);
+            categoryComboBox.Name = "categoryComboBox";
+            categoryComboBox.Size = new Size(276, 40);
+            categoryComboBox.TabIndex = 11;
+            categoryComboBox.SelectedIndexChanged += availableCategories_SelectedIndexChanged;
+            // 
+            // addCategoryTextbox
+            // 
+            addCategoryTextbox.Location = new Point(1188, 98);
+            addCategoryTextbox.Name = "addCategoryTextbox";
+            addCategoryTextbox.Size = new Size(200, 39);
+            addCategoryTextbox.TabIndex = 12;
+            addCategoryTextbox.TextChanged += textBox1_TextChanged;
+            // 
+            // addCategoryBtn
+            // 
+            addCategoryBtn.Location = new Point(1406, 94);
+            addCategoryBtn.Name = "addCategoryBtn";
+            addCategoryBtn.Size = new Size(240, 46);
+            addCategoryBtn.TabIndex = 13;
+            addCategoryBtn.Text = "Lägg till kategori";
+            addCategoryBtn.UseVisualStyleBackColor = true;
+            addCategoryBtn.Click += addCategoryBtn_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1795, 1172);
+            ClientSize = new Size(1902, 1172);
+            Controls.Add(addCategoryBtn);
+            Controls.Add(addCategoryTextbox);
+            Controls.Add(categoryComboBox);
             Controls.Add(episodeDesc);
             Controls.Add(podcastDesc);
             Controls.Add(textBox3);
@@ -210,7 +243,7 @@ namespace PodcastCatalogue
 
         #endregion
 
-        private DataGridView podcastDataGrid;
+        public DataGridView podcastDataGrid;
         private Button rssLinkSubmitBtn;
         private Button searchPodcastBtn;
         private Button searchEpisodeBtn;
@@ -221,5 +254,8 @@ namespace PodcastCatalogue
         private TextBox textBox3;
         private TextBox podcastDesc;
         private TextBox episodeDesc;
+        private ComboBox categoryComboBox;
+        private TextBox addCategoryTextbox;
+        private Button addCategoryBtn;
     }
 }

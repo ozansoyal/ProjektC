@@ -18,7 +18,7 @@ namespace BL
 
         public List<Podcast> getAllPodcasts()
         {
-            return poddRepository.getPodcastList();
+            return poddRepository.GetPodcastList();
         }
 
         public Podcast getFromRss(string rssLink)
