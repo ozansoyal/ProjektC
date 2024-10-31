@@ -20,7 +20,7 @@ namespace PodcastCatalogue
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void commitChangesBtn_Click(object sender, EventArgs e)
         {
             podcast.Name = textBox1.Text;
             podcast.Category = category;
@@ -42,18 +42,17 @@ namespace PodcastCatalogue
 
         private async void removePodcastBtn_Click(object sender, EventArgs e)
         {
-            await RemovePodcastAsync();
+            await RemovePodcastAndUpdateGrid();
         }
-        private async Task RemovePodcastAsync()
+
+        private async Task RemovePodcastAndUpdateGrid()
         {
             try
             {
                 string podcastTitle = podcast.Title;
-                await poddRepository.RemovePodcastAsync(podcast);
+                await poddRepository.RemovePodcastByTitleAsync(podcastTitle);
                 await mainForm.RefreshPodcastDataGridAsync();
-
                 mainForm.podcastDataGrid.ClearSelection();
-
                 MessageBox.Show($"{podcastTitle} has been removed.");
                 await mainForm.SetEpisodeDatagridNull();
                 this.Close();

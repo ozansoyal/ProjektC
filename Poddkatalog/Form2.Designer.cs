@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            button1 = new Button();
+            commitChangesBtn = new Button();
             removePodcastBtn = new Button();
             podcastNameLabel = new Label();
             podcastCostumNameLabel = new Label();
@@ -37,15 +37,15 @@
             categoryComboBox = new ComboBox();
             SuspendLayout();
             // 
-            // button1
+            // commitChangesBtn
             // 
-            button1.Location = new Point(152, 248);
-            button1.Name = "button1";
-            button1.Size = new Size(150, 46);
-            button1.TabIndex = 0;
-            button1.Text = "Ändra";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            commitChangesBtn.Location = new Point(152, 248);
+            commitChangesBtn.Name = "commitChangesBtn";
+            commitChangesBtn.Size = new Size(150, 46);
+            commitChangesBtn.TabIndex = 0;
+            commitChangesBtn.Text = "Ändra";
+            commitChangesBtn.UseVisualStyleBackColor = true;
+            commitChangesBtn.Click += commitChangesBtn_Click;
             // 
             // removePodcastBtn
             // 
@@ -99,6 +99,7 @@
             // 
             // categoryComboBox
             // 
+            categoryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             categoryComboBox.FormattingEnabled = true;
             categoryComboBox.Location = new Point(130, 181);
             categoryComboBox.Name = "categoryComboBox";
@@ -117,7 +118,7 @@
             Controls.Add(podcastNameLabel);
             Controls.Add(removePodcastBtn);
             Controls.Add(textBox1);
-            Controls.Add(button1);
+            Controls.Add(commitChangesBtn);
             Margin = new Padding(6);
             Name = "Form2";
             Text = "Form2";
@@ -128,7 +129,7 @@
 
         #endregion
 
-        private Button button1;
+        private Button commitChangesBtn;
         private Button removePodcastBtn;
         private Label podcastNameLabel;
         private Label podcastCostumNameLabel;

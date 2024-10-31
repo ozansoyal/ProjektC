@@ -24,12 +24,6 @@ namespace Datalagring
             SaveToFile(appData);
         }
 
-        public void RemovePodcast(Podcast podd)
-        {
-            appData.Podcasts.Remove(podd);
-            SaveToFile(appData);
-        }
-
         public List<Podcast> GetPodcastList()
         {
             return appData.Podcasts;
@@ -131,6 +125,7 @@ namespace Datalagring
                 Console.WriteLine("Podcast not found for update.");
             }
         }
+
         public void AddCategory(Category category)
         {
             foreach (Category c in appData.Categories)
@@ -143,5 +138,22 @@ namespace Datalagring
             appData.Categories.Add(category);
             SaveToFile(appData);
         }
+
+       
+        public async Task RemovePodcastByTitleAsync(string podcastTitle)
+        {
+            var podcastToRemove = appData.Podcasts.FirstOrDefault(p => p.Title == podcastTitle);
+            if (podcastToRemove != null)
+            {
+                await Task.Run(() => appData.Podcasts.Remove(podcastToRemove));
+                await SaveToFileAsync(appData);
+                Console.WriteLine("Podcast removed successfully.");
+            }
+            else
+            {
+                Console.WriteLine("Podcast not found in the list.");
+            }
+        }
+
     }
 }

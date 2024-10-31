@@ -187,6 +187,7 @@ namespace PodcastCatalogue
             // 
             // categoryComboBox
             // 
+            categoryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             categoryComboBox.FormattingEnabled = true;
             categoryComboBox.Location = new Point(891, 98);
             categoryComboBox.Name = "categoryComboBox";
