@@ -10,6 +10,7 @@ namespace PodcastCatalogue
         private Podcast podcast;
         private PoddRepository poddRepository;
         private Form1 mainForm;
+        private string category;
 
         public Form2(Podcast podcast, PoddRepository poddRepository, Form1 mainForm)
         {
@@ -22,14 +23,21 @@ namespace PodcastCatalogue
         private void button1_Click(object sender, EventArgs e)
         {
             podcast.Name = textBox1.Text;
-            podcast.Category = textBox2.Text;
+            podcast.Category = category;
             poddRepository.UpdatePodcast(podcast);
             MessageBox.Show("Changes saved.");
+            mainForm.RefreshPodcastDataGrid();
         }
 
         private void Form2_Load(object sender, EventArgs e)
         {
             podcastNameLabel.Text = podcast.Title;
+
+            var appData = poddRepository.ReadFromFile();
+            var categories = appData.Categories;
+
+            categoryComboBox.DataSource = categories;
+            categoryComboBox.DisplayMember = "Name";
         }
 
         private async void removePodcastBtn_Click(object sender, EventArgs e)
@@ -55,6 +63,15 @@ namespace PodcastCatalogue
                 Console.WriteLine($"Exception: {ex.Message}");
                 Console.WriteLine($"Stack Trace: {ex.StackTrace}");
                 MessageBox.Show($"Error: {ex.Message}\nStack Trace: {ex.StackTrace}");
+            }
+        }
+
+        private void categoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Category selectedCategory = categoryComboBox.SelectedItem as Category;
+            if (selectedCategory != null)
+            {
+                category = selectedCategory.Name;
             }
         }
     }

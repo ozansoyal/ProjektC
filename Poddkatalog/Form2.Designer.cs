@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             button1 = new Button();
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
             removePodcastBtn = new Button();
             podcastNameLabel = new Label();
             podcastCostumNameLabel = new Label();
             categoryLabel = new Label();
+            textBox1 = new TextBox();
+            categoryComboBox = new ComboBox();
             SuspendLayout();
             // 
             // button1
@@ -46,20 +46,6 @@
             button1.Text = "Ändra";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
-            // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(129, 131);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(200, 39);
-            textBox1.TabIndex = 1;
-            // 
-            // textBox2
-            // 
-            textBox2.Location = new Point(129, 186);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(200, 39);
-            textBox2.TabIndex = 2;
             // 
             // removePodcastBtn
             // 
@@ -104,16 +90,32 @@
             categoryLabel.TabIndex = 6;
             categoryLabel.Text = "Kategori";
             // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(130, 131);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(242, 39);
+            textBox1.TabIndex = 1;
+            // 
+            // categoryComboBox
+            // 
+            categoryComboBox.FormattingEnabled = true;
+            categoryComboBox.Location = new Point(130, 181);
+            categoryComboBox.Name = "categoryComboBox";
+            categoryComboBox.Size = new Size(242, 40);
+            categoryComboBox.TabIndex = 7;
+            categoryComboBox.SelectedIndexChanged += categoryComboBox_SelectedIndexChanged;
+            // 
             // Form2
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(456, 404);
+            Controls.Add(categoryComboBox);
             Controls.Add(categoryLabel);
             Controls.Add(podcastCostumNameLabel);
             Controls.Add(podcastNameLabel);
             Controls.Add(removePodcastBtn);
-            Controls.Add(textBox2);
             Controls.Add(textBox1);
             Controls.Add(button1);
             Margin = new Padding(6);
@@ -127,11 +129,11 @@
         #endregion
 
         private Button button1;
-        private TextBox textBox1;
-        private TextBox textBox2;
         private Button removePodcastBtn;
         private Label podcastNameLabel;
         private Label podcastCostumNameLabel;
         private Label categoryLabel;
+        private TextBox textBox1;
+        private ComboBox categoryComboBox;
     }
 }
