@@ -89,10 +89,12 @@ namespace PodcastCatalogue
             podds = appData.Podcasts;
             var categories = appData.Categories;
 
+            categories.Insert(0, new Category { Name = "Show All" });
+
             RefreshPodcastDataGrid();
 
             categoryComboBox.DataSource = categories;
-            categoryComboBox.DisplayMember = "Name"; 
+            categoryComboBox.DisplayMember = "Name";
         }
 
 
@@ -243,14 +245,35 @@ namespace PodcastCatalogue
             {
                 var filteredPodcasts = podds
                     .Where(p => p.Title != null && p.Title.ToLower().Contains(title.ToLower()))
-                    .ToList(); // Execute the query
+                    .ToList();
 
-                podcastDataGrid.DataSource = null; // Clear existing data source
-                podcastDataGrid.DataSource = filteredPodcasts; // Set new data source
+                podcastDataGrid.DataSource = null;
+                podcastDataGrid.DataSource = filteredPodcasts; 
             }
             else
             {
                 MessageBox.Show("No podcasts available to filter.");
+            }
+        }
+
+        private void FilterEpisodeByTitle(string title)
+        {
+            if (podds != null && podds.Count > 0)
+            {
+                var trimmedTitle = title.Trim();
+
+                var filteredEpisodes = podds
+                    .Where(p => p.Episode != null)
+                    .SelectMany(p => p.Episode)
+                    .Where(e => e.Title != null && e.Title.Trim().ToLower().Contains(trimmedTitle.ToLower()))
+                    .ToList();
+
+                episodeDataGrid.DataSource = null;
+                episodeDataGrid.DataSource = filteredEpisodes;
+            }
+            else
+            {
+                MessageBox.Show("No episodes available to filter.");
             }
         }
 
@@ -284,23 +307,57 @@ namespace PodcastCatalogue
 
 
         }
+        private void FilterPodcastsByCategory(string categoryName)
+        {
+            if (podds != null && podds.Count > 0)
+            {
+                var filteredPodcasts = podds
+                    .Where(p => p.Category != null && p.Category.Equals(categoryName, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+                podcastDataGrid.DataSource = null; 
+                podcastDataGrid.DataSource = filteredPodcasts; 
+            }
+            else
+            {
+                MessageBox.Show("No podcasts available to filter.");
+            }
+        }
+
 
         private void availableCategories_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            if (categoryComboBox.SelectedItem != null && categoryComboBox.SelectedItem is Category selectedCategory)
+            {
+                if (selectedCategory.Name == "Show All")
+                {
+                    RefreshPodcastDataGrid(); 
+                }
+                else
+                {
+                    FilterPodcastsByCategory(selectedCategory.Name);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Error: Invalid category selected.");
+            }
         }
+
         private void RefreshComboBox()
         {
             var categories = poddRepository.ReadFromFile().Categories;
+           
             categoryComboBox.DataSource = null;
             categoryComboBox.DataSource = categories;
             categoryComboBox.DisplayMember = "Name";
-            
+
         }
 
-        
-
-
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+            string searchText = textBox3.Text;
+            FilterEpisodeByTitle(searchText);
+        }
     }
 }
 

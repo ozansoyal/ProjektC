@@ -56,8 +56,7 @@ namespace PodcastCatalogue
             podcastDataGrid.AllowUserToResizeRows = false;
             podcastDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             podcastDataGrid.EditMode = DataGridViewEditMode.EditProgrammatically;
-            podcastDataGrid.Location = new Point(68, 251);
-            podcastDataGrid.Margin = new Padding(6);
+            podcastDataGrid.Location = new Point(37, 118);
             podcastDataGrid.MultiSelect = false;
             podcastDataGrid.Name = "podcastDataGrid";
             podcastDataGrid.ReadOnly = true;
@@ -65,16 +64,15 @@ namespace PodcastCatalogue
             podcastDataGrid.RowHeadersWidth = 82;
             podcastDataGrid.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             podcastDataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            podcastDataGrid.Size = new Size(639, 403);
+            podcastDataGrid.Size = new Size(344, 189);
             podcastDataGrid.TabIndex = 0;
             podcastDataGrid.CellContentClick += podcastDataGrid_CellContentClick;
             // 
             // rssLinkSubmitBtn
             // 
-            rssLinkSubmitBtn.Location = new Point(723, 93);
-            rssLinkSubmitBtn.Margin = new Padding(6);
+            rssLinkSubmitBtn.Location = new Point(389, 44);
             rssLinkSubmitBtn.Name = "rssLinkSubmitBtn";
-            rssLinkSubmitBtn.Size = new Size(139, 49);
+            rssLinkSubmitBtn.Size = new Size(75, 23);
             rssLinkSubmitBtn.TabIndex = 1;
             rssLinkSubmitBtn.Text = "Lägg till";
             rssLinkSubmitBtn.UseVisualStyleBackColor = true;
@@ -82,10 +80,9 @@ namespace PodcastCatalogue
             // 
             // searchPodcastBtn
             // 
-            searchPodcastBtn.Location = new Point(511, 176);
-            searchPodcastBtn.Margin = new Padding(6);
+            searchPodcastBtn.Location = new Point(275, 82);
             searchPodcastBtn.Name = "searchPodcastBtn";
-            searchPodcastBtn.Size = new Size(139, 49);
+            searchPodcastBtn.Size = new Size(75, 23);
             searchPodcastBtn.TabIndex = 2;
             searchPodcastBtn.Text = "Sök";
             searchPodcastBtn.UseVisualStyleBackColor = true;
@@ -93,10 +90,9 @@ namespace PodcastCatalogue
             // 
             // searchEpisodeBtn
             // 
-            searchEpisodeBtn.Location = new Point(1292, 181);
-            searchEpisodeBtn.Margin = new Padding(6);
+            searchEpisodeBtn.Location = new Point(696, 85);
             searchEpisodeBtn.Name = "searchEpisodeBtn";
-            searchEpisodeBtn.Size = new Size(139, 49);
+            searchEpisodeBtn.Size = new Size(75, 23);
             searchEpisodeBtn.TabIndex = 3;
             searchEpisodeBtn.Text = "Sök avs";
             searchEpisodeBtn.UseVisualStyleBackColor = true;
@@ -104,10 +100,9 @@ namespace PodcastCatalogue
             // editWindowBtn
             // 
             editWindowBtn.Cursor = Cursors.Hand;
-            editWindowBtn.Location = new Point(662, 176);
-            editWindowBtn.Margin = new Padding(6);
+            editWindowBtn.Location = new Point(356, 82);
             editWindowBtn.Name = "editWindowBtn";
-            editWindowBtn.Size = new Size(139, 49);
+            editWindowBtn.Size = new Size(75, 23);
             editWindowBtn.TabIndex = 4;
             editWindowBtn.Text = "Edit";
             editWindowBtn.UseVisualStyleBackColor = true;
@@ -115,19 +110,17 @@ namespace PodcastCatalogue
             // 
             // poddSearchField
             // 
-            poddSearchField.Location = new Point(68, 176);
-            poddSearchField.Margin = new Padding(6);
+            poddSearchField.Location = new Point(37, 82);
             poddSearchField.Name = "poddSearchField";
-            poddSearchField.Size = new Size(403, 39);
+            poddSearchField.Size = new Size(219, 23);
             poddSearchField.TabIndex = 5;
             poddSearchField.TextChanged += poddSearchField_TextChanged;
             // 
             // rssInputField
             // 
-            rssInputField.Location = new Point(68, 93);
-            rssInputField.Margin = new Padding(6);
+            rssInputField.Location = new Point(37, 44);
             rssInputField.Name = "rssInputField";
-            rssInputField.Size = new Size(622, 39);
+            rssInputField.Size = new Size(337, 23);
             rssInputField.TabIndex = 6;
             rssInputField.TextChanged += textBox2_TextChanged;
             // 
@@ -139,8 +132,7 @@ namespace PodcastCatalogue
             episodeDataGrid.AllowUserToResizeRows = false;
             episodeDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             episodeDataGrid.EditMode = DataGridViewEditMode.EditProgrammatically;
-            episodeDataGrid.Location = new Point(866, 251);
-            episodeDataGrid.Margin = new Padding(6);
+            episodeDataGrid.Location = new Point(466, 118);
             episodeDataGrid.MultiSelect = false;
             episodeDataGrid.Name = "episodeDataGrid";
             episodeDataGrid.ReadOnly = true;
@@ -148,27 +140,28 @@ namespace PodcastCatalogue
             episodeDataGrid.RowHeadersWidth = 82;
             episodeDataGrid.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             episodeDataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            episodeDataGrid.Size = new Size(637, 403);
+            episodeDataGrid.Size = new Size(343, 189);
             episodeDataGrid.TabIndex = 7;
             episodeDataGrid.CellContentClick += episodeDataGrid_CellContentClick;
             // 
             // textBox3
             // 
-            textBox3.Location = new Point(866, 181);
-            textBox3.Margin = new Padding(6);
+            textBox3.Location = new Point(466, 85);
             textBox3.Name = "textBox3";
-            textBox3.Size = new Size(388, 39);
+            textBox3.Size = new Size(211, 23);
             textBox3.TabIndex = 8;
+            textBox3.TextChanged += textBox3_TextChanged;
             // 
             // podcastDesc
             // 
             podcastDesc.BackColor = Color.White;
             podcastDesc.Enabled = false;
-            podcastDesc.Location = new Point(76, 700);
+            podcastDesc.Location = new Point(41, 328);
+            podcastDesc.Margin = new Padding(2, 1, 2, 1);
             podcastDesc.Multiline = true;
             podcastDesc.Name = "podcastDesc";
             podcastDesc.ReadOnly = true;
-            podcastDesc.Size = new Size(631, 195);
+            podcastDesc.Size = new Size(342, 94);
             podcastDesc.TabIndex = 9;
             podcastDesc.TextChanged += podcastDesc_TextChanged;
             // 
@@ -177,11 +170,12 @@ namespace PodcastCatalogue
             episodeDesc.BackColor = Color.White;
             episodeDesc.Cursor = Cursors.IBeam;
             episodeDesc.Enabled = false;
-            episodeDesc.Location = new Point(866, 700);
+            episodeDesc.Location = new Point(466, 328);
+            episodeDesc.Margin = new Padding(2, 1, 2, 1);
             episodeDesc.Multiline = true;
             episodeDesc.Name = "episodeDesc";
             episodeDesc.ReadOnly = true;
-            episodeDesc.Size = new Size(631, 195);
+            episodeDesc.Size = new Size(342, 94);
             episodeDesc.TabIndex = 10;
             episodeDesc.TextChanged += episodeDesc_TextChanged;
             // 
@@ -189,25 +183,28 @@ namespace PodcastCatalogue
             // 
             categoryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             categoryComboBox.FormattingEnabled = true;
-            categoryComboBox.Location = new Point(891, 98);
+            categoryComboBox.Location = new Point(480, 46);
+            categoryComboBox.Margin = new Padding(2, 1, 2, 1);
             categoryComboBox.Name = "categoryComboBox";
-            categoryComboBox.Size = new Size(276, 40);
+            categoryComboBox.Size = new Size(150, 23);
             categoryComboBox.TabIndex = 11;
             categoryComboBox.SelectedIndexChanged += availableCategories_SelectedIndexChanged;
             // 
             // addCategoryTextbox
             // 
-            addCategoryTextbox.Location = new Point(1188, 98);
+            addCategoryTextbox.Location = new Point(640, 46);
+            addCategoryTextbox.Margin = new Padding(2, 1, 2, 1);
             addCategoryTextbox.Name = "addCategoryTextbox";
-            addCategoryTextbox.Size = new Size(200, 39);
+            addCategoryTextbox.Size = new Size(110, 23);
             addCategoryTextbox.TabIndex = 12;
             addCategoryTextbox.TextChanged += textBox1_TextChanged;
             // 
             // addCategoryBtn
             // 
-            addCategoryBtn.Location = new Point(1406, 94);
+            addCategoryBtn.Location = new Point(757, 44);
+            addCategoryBtn.Margin = new Padding(2, 1, 2, 1);
             addCategoryBtn.Name = "addCategoryBtn";
-            addCategoryBtn.Size = new Size(240, 46);
+            addCategoryBtn.Size = new Size(129, 22);
             addCategoryBtn.TabIndex = 13;
             addCategoryBtn.Text = "Lägg till kategori";
             addCategoryBtn.UseVisualStyleBackColor = true;
@@ -215,9 +212,9 @@ namespace PodcastCatalogue
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(13F, 32F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1902, 1172);
+            ClientSize = new Size(1024, 549);
             Controls.Add(addCategoryBtn);
             Controls.Add(addCategoryTextbox);
             Controls.Add(categoryComboBox);
@@ -232,7 +229,7 @@ namespace PodcastCatalogue
             Controls.Add(searchPodcastBtn);
             Controls.Add(rssLinkSubmitBtn);
             Controls.Add(podcastDataGrid);
-            Margin = new Padding(4, 2, 4, 2);
+            Margin = new Padding(2, 1, 2, 1);
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;
