@@ -43,13 +43,21 @@ namespace PodcastCatalogue
             podds = appData.Podcasts;
             podcastDataGrid.DataSource = null;
             podcastDataGrid.DataSource = podds;
-            SetColumnHeaders();
-            podcastDataGrid.Columns["Description"].Visible = false;
+            podcastDataGrid.ClearSelection();
+
+            podcastDataGrid.Columns["Title"].Width = 240;
+            podcastDataGrid.Columns["Name"].Width = 240;
+
+            if (podcastDataGrid.Columns["Description"] != null)
+            {
+                podcastDataGrid.Columns["Description"].Visible = false;
+            }
             if (episodeDataGrid.Columns.Count > 0)
             {
                 episodeDataGrid.Columns["Description"].Visible = false;
             }
         }
+
 
         private void rssLinkSubmitBtn_Click(object sender, EventArgs e)
         {
@@ -84,7 +92,7 @@ namespace PodcastCatalogue
             podds = appData.Podcasts;
             var categories = appData.Categories;
 
-            categories.Insert(0, new Category { Name = "Show All" });
+            categories.Insert(0, new Category { Name = "Visa alla" });
 
             RefreshPodcastDataGrid();
             podcastDataGrid.Columns["Description"].Visible = false;
@@ -173,9 +181,19 @@ namespace PodcastCatalogue
                 podcastDataGrid.DataSource = podds;
                 podcastDataGrid.ClearSelection();
 
+                podcastDataGrid.Columns["Title"].Width = 240;
+                podcastDataGrid.Columns["Name"].Width = 240;
+
+                if (podcastDataGrid.Columns["Description"] != null)
+                {
+                    podcastDataGrid.Columns["Description"].Visible = false;
+                }
                 if (episodeDataGrid.Columns.Count > 0)
                 {
-                    episodeDataGrid.Columns["Description"].Visible = false;
+                    if (episodeDataGrid.Columns["Description"] != null)
+                    {
+                        episodeDataGrid.Columns["Description"].Visible = false;
+                    }
                 }
             }
             finally
@@ -183,6 +201,7 @@ namespace PodcastCatalogue
                 podcastDataGrid.SelectionChanged += podcastDataGrid_SelectionChanged;
             }
         }
+
 
         private void podcastDataGrid_SelectionChanged(object sender, EventArgs e)
         {
@@ -228,12 +247,21 @@ namespace PodcastCatalogue
 
                 podcastDataGrid.DataSource = null;
                 podcastDataGrid.DataSource = filteredPodcasts;
+
+                podcastDataGrid.Columns["Title"].Width = 240;
+                podcastDataGrid.Columns["Name"].Width = 240;
+
+                if (podcastDataGrid.Columns["Description"] != null)
+                {
+                    podcastDataGrid.Columns["Description"].Visible = false;
+                }
             }
             else
             {
                 MessageBox.Show("No podcasts available to filter.");
             }
         }
+
         private void FilterEpisodeByTitle(string title)
         {
             if (podds != null && podds.Count > 0)
@@ -248,12 +276,18 @@ namespace PodcastCatalogue
 
                 episodeDataGrid.DataSource = null;
                 episodeDataGrid.DataSource = filteredEpisodes;
+
+                if (episodeDataGrid.Columns["Description"] != null)
+                {
+                    episodeDataGrid.Columns["Description"].Visible = false;
+                }
             }
             else
             {
                 MessageBox.Show("No episodes available to filter.");
             }
         }
+
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
@@ -308,7 +342,7 @@ namespace PodcastCatalogue
         {
             if (categoryComboBox.SelectedItem != null && categoryComboBox.SelectedItem is Category selectedCategory)
             {
-                if (selectedCategory.Name == "Show All")
+                if (selectedCategory.Name == "Visa alla")
                 {
                     RefreshPodcastDataGrid();
                 }
@@ -347,37 +381,6 @@ namespace PodcastCatalogue
         {
 
         }
-        private void SetColumnHeaders()
-        {
-            // Set podcastDataGrid column headers
-            if (podcastDataGrid.Columns["Title"] != null)
-                podcastDataGrid.Columns["Title"].HeaderText = "Titel";
-                podcastDataGrid.Columns["Title"].Width = 250;
-
-            if (podcastDataGrid.Columns["Name"] != null)
-                podcastDataGrid.Columns["Name"].HeaderText = "Namn";
-                podcastDataGrid.Columns["Title"].Width = 250;
-
-
-            if (podcastDataGrid.Columns["Count"] != null)
-                podcastDataGrid.Columns["Count"].HeaderText = "Antal avsnitt";
-
-            // Set episodeDataGrid column headers
-            if (episodeDataGrid.Columns["Title"] != null)
-                episodeDataGrid.Columns["Title"].HeaderText = "Titel";
-
-            if (episodeDataGrid.Columns["PublishDate"] != null)
-                episodeDataGrid.Columns["PublishDate"].HeaderText = "Datum";
-
-            if (episodeDataGrid.Columns["Duration"] != null)
-                episodeDataGrid.Columns["Duration"].HeaderText = "Längd";
-
-            if (episodeDataGrid.Columns["Link"] != null)
-                episodeDataGrid.Columns["Link"].HeaderText = "Länk";
-        }
-
-        // Call this method after setting the data source
-
     }
 }
 

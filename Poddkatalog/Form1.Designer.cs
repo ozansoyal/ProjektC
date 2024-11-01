@@ -90,7 +90,7 @@ namespace PodcastCatalogue
             editWindowBtn.Name = "editWindowBtn";
             editWindowBtn.Size = new Size(139, 49);
             editWindowBtn.TabIndex = 4;
-            editWindowBtn.Text = "Edit";
+            editWindowBtn.Text = "Ändra";
             editWindowBtn.UseVisualStyleBackColor = true;
             editWindowBtn.Click += editWindowBtn_Click;
             // 
@@ -145,8 +145,6 @@ namespace PodcastCatalogue
             // podcastDesc
             // 
             podcastDesc.BackColor = Color.White;
-            podcastDesc.Enabled = true;
-            podcastDesc.Cursor = Cursors.Arrow;
             podcastDesc.Location = new Point(69, 700);
             podcastDesc.Margin = new Padding(4, 2, 4, 2);
             podcastDesc.Multiline = true;
@@ -160,8 +158,6 @@ namespace PodcastCatalogue
             // episodeDesc
             // 
             episodeDesc.BackColor = Color.White;
-            episodeDesc.Cursor = Cursors.Arrow;
-            episodeDesc.Enabled = true;
             episodeDesc.Location = new Point(985, 700);
             episodeDesc.Margin = new Padding(4, 2, 4, 2);
             episodeDesc.Multiline = true;
