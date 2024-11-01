@@ -121,7 +121,7 @@
             Controls.Add(commitChangesBtn);
             Margin = new Padding(6);
             Name = "Form2";
-            Text = "Form2";
+            Text = "Podmania (edit)";
             Load += Form2_Load;
             ResumeLayout(false);
             PerformLayout();

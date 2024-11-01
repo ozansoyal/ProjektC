@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Models
 {
     [Serializable]
-    public class Podcast
+    public class Podcast : IPodcast
     {
         public string Title { get; set; }
         public string Name { get; set; }

@@ -11,7 +11,7 @@ namespace Models
         string Title { get; set; }
         string Name { get; set; }
         string Category { get; set; }
-        public List<IEpisode> Episode { get; set; }
+        public List<Episode> Episode { get; set; }
         int Count { get; set; }
     }
 }
