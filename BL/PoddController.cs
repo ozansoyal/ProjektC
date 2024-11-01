@@ -26,11 +26,9 @@ namespace BL
             XmlReader myXmlReader = XmlReader.Create(rssLink);
             SyndicationFeed poddFeed = SyndicationFeed.Load(myXmlReader);
 
-            // Podcast title
             string podcastTitle = poddFeed.Title.Text;
             string podcastDesc = poddFeed.Description.Text;
 
-            // Collect all episodes
             List<Episode> episodes = new List<Episode>();
 
             foreach (SyndicationItem item in poddFeed.Items)

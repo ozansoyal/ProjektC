@@ -1,9 +1,6 @@
 using BL;
 using Datalagring;
 using Models;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Windows.Forms;
 
 namespace PodcastCatalogue
 {
@@ -26,9 +23,6 @@ namespace PodcastCatalogue
 
             podcastDataGrid.SelectionChanged += podcastDataGrid_SelectionChanged;
             episodeDataGrid.SelectionChanged += episodeDataGrid_SelectionChanged;
-
-
-
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -49,34 +43,35 @@ namespace PodcastCatalogue
             podds = appData.Podcasts;
             podcastDataGrid.DataSource = null;
             podcastDataGrid.DataSource = podds;
+            SetColumnHeaders();
+            podcastDataGrid.Columns["Description"].Visible = false;
             if (episodeDataGrid.Columns.Count > 0)
             {
                 episodeDataGrid.Columns["Description"].Visible = false;
             }
         }
 
-
-
-
-
-
         private void rssLinkSubmitBtn_Click(object sender, EventArgs e)
         {
-            string link = rssInputField.Text.Trim();
-            if (validator.ValidateRssLink(link))
+            try
             {
-                poddRepository.AddPodcast(poddController.getFromRss(link)); //Lägger till i listan
-                RefreshPodcastDataGrid();
+                string link = rssInputField.Text.Trim();
+                if (validator.ValidateRssLink(link))
+                {
+                    poddRepository.AddPodcast(poddController.getFromRss(link)); //Lägger till i listan
+                    RefreshPodcastDataGrid();
 
+                }
+                else
+                {
+                    MessageBox.Show("Se över länk");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Error!!!");
+                MessageBox.Show("Error: kunde inte hämta från RSS, se över länk");
             }
         }
-
-
-
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
@@ -92,42 +87,32 @@ namespace PodcastCatalogue
             categories.Insert(0, new Category { Name = "Show All" });
 
             RefreshPodcastDataGrid();
+            podcastDataGrid.Columns["Description"].Visible = false;
+
 
             categoryComboBox.DataSource = categories;
             categoryComboBox.DisplayMember = "Name";
+
+
+
         }
-
-
-
-
 
         private void episodeDataGrid_SelectionChanged(object sender, EventArgs e)
         {
             if (episodeDataGrid.CurrentRow != null)
             {
-
                 Episode selectedEpisode = (Episode)episodeDataGrid.CurrentRow.DataBoundItem;
                 if (selectedEpisode != null)
                 {
-                    //istället för att lägga in den direkt
-
-                    //TODO
-                    //tag bort allt mellan <a> och </a> inkluderar <a> och </a>
-
                     string desc = selectedEpisode.Description;
-                    string[] phrasesToRemove = new string[] { "<div>", "</div>", "<p>", "</p>" };
 
-                    foreach (string phrase in phrasesToRemove)
-                    {
-                        desc = desc.Replace(phrase, "").Trim();
-                    }
+                    //tag bort <> och allt däri
+                    desc = System.Text.RegularExpressions.Regex.Replace(desc, "<.*?>", "").Trim();
 
                     episodeDesc.Text = desc;
                 }
             }
         }
-
-
 
         private void podcastDataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -187,6 +172,7 @@ namespace PodcastCatalogue
                 podcastDataGrid.DataSource = null;
                 podcastDataGrid.DataSource = podds;
                 podcastDataGrid.ClearSelection();
+
                 if (episodeDataGrid.Columns.Count > 0)
                 {
                     episodeDataGrid.Columns["Description"].Visible = false;
@@ -209,20 +195,13 @@ namespace PodcastCatalogue
                     {
                         episodeDataGrid.DataSource = selectedPodcast.Episode;
 
-                        // Remove everything between <a> and </a> including the tags
                         string desc = selectedPodcast.Description;
-                        desc = System.Text.RegularExpressions.Regex.Replace(desc, @"<a[^>]*>.*?</a>", "", System.Text.RegularExpressions.RegexOptions.Singleline).Trim();
 
-                        // Remove specific HTML tags including <br>, <hr>, <p style="...">
-                        string[] phrasesToRemove = new string[] { "<div>", "</div>", "<br>", "<hr>" };
-                        foreach (string phrase in phrasesToRemove)
-                        {
-                            desc = desc.Replace(phrase, "").Trim();
-                        }
+                        //tag bort <> och allt däri
+                        desc = System.Text.RegularExpressions.Regex.Replace(desc, "<.*?>", "").Trim();
 
-                        // Remove <p style="..."> tags
-                        desc = System.Text.RegularExpressions.Regex.Replace(desc, @"<p[^>]*>", "").Trim();
                         podcastDesc.Text = desc;
+                        episodeDataGrid.Columns["Description"].Visible = false;
                     }
                 }
                 else
@@ -235,9 +214,9 @@ namespace PodcastCatalogue
             {
                 Console.WriteLine($"Exception: {ex.Message}");
                 Console.WriteLine($"Stack Trace: {ex.StackTrace}");
-                MessageBox.Show($"Error: {ex.Message}\nStack Trace: {ex.StackTrace}");
             }
         }
+
 
         private void FilterPodcastsByTitle(string title)
         {
@@ -248,14 +227,13 @@ namespace PodcastCatalogue
                     .ToList();
 
                 podcastDataGrid.DataSource = null;
-                podcastDataGrid.DataSource = filteredPodcasts; 
+                podcastDataGrid.DataSource = filteredPodcasts;
             }
             else
             {
                 MessageBox.Show("No podcasts available to filter.");
             }
         }
-
         private void FilterEpisodeByTitle(string title)
         {
             if (podds != null && podds.Count > 0)
@@ -284,6 +262,11 @@ namespace PodcastCatalogue
 
         private void addCategoryBtn_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(addCategoryTextbox.Text.Trim()))
+            {
+                MessageBox.Show("Category name cannot be empty");
+                return;
+            }
             if (poddRepository.ReadFromFile().Categories.Count == 0)
             {
                 Category category = new Category(addCategoryTextbox.Text.Trim());
@@ -303,10 +286,8 @@ namespace PodcastCatalogue
                 poddRepository.AddCategory(category);
                 RefreshComboBox();
             }
-
-
-
         }
+
         private void FilterPodcastsByCategory(string categoryName)
         {
             if (podds != null && podds.Count > 0)
@@ -314,8 +295,8 @@ namespace PodcastCatalogue
                 var filteredPodcasts = podds
                     .Where(p => p.Category != null && p.Category.Equals(categoryName, StringComparison.OrdinalIgnoreCase))
                     .ToList();
-                podcastDataGrid.DataSource = null; 
-                podcastDataGrid.DataSource = filteredPodcasts; 
+                podcastDataGrid.DataSource = null;
+                podcastDataGrid.DataSource = filteredPodcasts;
             }
             else
             {
@@ -323,14 +304,13 @@ namespace PodcastCatalogue
             }
         }
 
-
         private void availableCategories_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (categoryComboBox.SelectedItem != null && categoryComboBox.SelectedItem is Category selectedCategory)
             {
                 if (selectedCategory.Name == "Show All")
                 {
-                    RefreshPodcastDataGrid(); 
+                    RefreshPodcastDataGrid();
                 }
                 else
                 {
@@ -346,11 +326,10 @@ namespace PodcastCatalogue
         private void RefreshComboBox()
         {
             var categories = poddRepository.ReadFromFile().Categories;
-           
+
             categoryComboBox.DataSource = null;
             categoryComboBox.DataSource = categories;
             categoryComboBox.DisplayMember = "Name";
-
         }
 
         private void textBox3_TextChanged(object sender, EventArgs e)
@@ -358,6 +337,47 @@ namespace PodcastCatalogue
             string searchText = textBox3.Text;
             FilterEpisodeByTitle(searchText);
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void SetColumnHeaders()
+        {
+            // Set podcastDataGrid column headers
+            if (podcastDataGrid.Columns["Title"] != null)
+                podcastDataGrid.Columns["Title"].HeaderText = "Titel";
+                podcastDataGrid.Columns["Title"].Width = 250;
+
+            if (podcastDataGrid.Columns["Name"] != null)
+                podcastDataGrid.Columns["Name"].HeaderText = "Namn";
+                podcastDataGrid.Columns["Title"].Width = 250;
+
+
+            if (podcastDataGrid.Columns["Count"] != null)
+                podcastDataGrid.Columns["Count"].HeaderText = "Antal avsnitt";
+
+            // Set episodeDataGrid column headers
+            if (episodeDataGrid.Columns["Title"] != null)
+                episodeDataGrid.Columns["Title"].HeaderText = "Titel";
+
+            if (episodeDataGrid.Columns["PublishDate"] != null)
+                episodeDataGrid.Columns["PublishDate"].HeaderText = "Datum";
+
+            if (episodeDataGrid.Columns["Duration"] != null)
+                episodeDataGrid.Columns["Duration"].HeaderText = "Längd";
+
+            if (episodeDataGrid.Columns["Link"] != null)
+                episodeDataGrid.Columns["Link"].HeaderText = "Länk";
+        }
+
+        // Call this method after setting the data source
+
     }
 }
 
