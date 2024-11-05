@@ -183,6 +183,19 @@ namespace Datalagring
                 Console.WriteLine("Podcast not found in the list.");
             }
         }
-
+        public async Task RemovePodcastByNameAsync(string podcastName)
+        {
+            var podcastToRemove = appData.Podcasts.FirstOrDefault(p => p.Name == podcastName);
+            if (podcastToRemove != null)
+            {
+                await Task.Run(() => appData.Podcasts.Remove(podcastToRemove));
+                await SaveToFileAsync(appData);
+                Console.WriteLine("Podcast removed successfully.");
+            }
+            else
+            {
+                Console.WriteLine("Podcast not found in the list.");
+            }
+        }
     }
 }
