@@ -1,6 +1,7 @@
 using BL;
 using Datalagring;
 using Models;
+using System.Windows.Forms;
 
 namespace PodcastCatalogue
 {
@@ -41,6 +42,9 @@ namespace PodcastCatalogue
         {
             var appData = poddRepository.ReadFromFile();
             podds = appData.Podcasts;
+
+            // If necessary, update podcasts' categories here based on your specific needs.
+
             podcastDataGrid.DataSource = null;
             podcastDataGrid.DataSource = podds;
             podcastDataGrid.ClearSelection();
@@ -51,10 +55,6 @@ namespace PodcastCatalogue
             if (podcastDataGrid.Columns["Description"] != null)
             {
                 podcastDataGrid.Columns["Description"].Visible = false;
-            }
-            if (episodeDataGrid.Columns.Count > 0)
-            {
-                episodeDataGrid.Columns["Description"].Visible = false;
             }
         }
 
@@ -100,11 +100,20 @@ namespace PodcastCatalogue
 
             categoryComboBox.DataSource = categories;
             categoryComboBox.DisplayMember = "Name";
-
-
-
+            RefreshCategoryListBox();
+            
         }
 
+        private void RefreshCategoryListBox()
+        {
+            var categories = poddRepository.ReadFromFile().Categories;
+
+            categoryListBox.Items.Clear();
+            foreach (var category in categories)
+            {
+                categoryListBox.Items.Add(category.Name);
+            }
+        }
         private void episodeDataGrid_SelectionChanged(object sender, EventArgs e)
         {
             if (episodeDataGrid.CurrentRow != null)
@@ -301,26 +310,48 @@ namespace PodcastCatalogue
                 MessageBox.Show("Category name cannot be empty");
                 return;
             }
-            if (poddRepository.ReadFromFile().Categories.Count == 0)
+
+            var categories = poddRepository.ReadFromFile().Categories;
+
+            // Check if the category already exists
+            if (categories.Any(c => c.Name.Equals(addCategoryTextbox.Text.Trim(), StringComparison.OrdinalIgnoreCase)))
             {
-                Category category = new Category(addCategoryTextbox.Text.Trim());
-                poddRepository.AddCategory(category);
+                MessageBox.Show("Category already exists");
+                return;
             }
-            else
+
+            // Add the new category
+            Category category = new Category(addCategoryTextbox.Text.Trim());
+            poddRepository.AddCategory(category);
+            RefreshCategoriesWithVisaAlla();
+
+        }
+
+        private void RefreshCategoriesWithVisaAlla()
+        {
+            // Read categories from the repository
+            var categories = poddRepository.ReadFromFile().Categories;
+
+            // Clear existing items
+            categoryComboBox.DataSource = null;
+            categoryListBox.Items.Clear();
+
+            // Re-add "Visa alla" to the category list
+            categories.Insert(0, new Category { Name = "Visa alla" });
+
+            // Set the new data source for the combo box
+            categoryComboBox.DataSource = categories;
+            categoryComboBox.DisplayMember = "Name";
+
+            // Refresh the list box
+            foreach (var category in categories)
             {
-                foreach (Category c in poddRepository.ReadFromFile().Categories)
-                {
-                    if (c.Name == addCategoryTextbox.Text.Trim())
-                    {
-                        MessageBox.Show("Category already exists");
-                        return;
-                    }
-                }
-                Category category = new Category(addCategoryTextbox.Text.Trim());
-                poddRepository.AddCategory(category);
-                RefreshComboBox();
+                categoryListBox.Items.Add(category.Name);
             }
         }
+
+
+
 
         private void FilterPodcastsByCategory(string categoryName)
         {
@@ -351,10 +382,10 @@ namespace PodcastCatalogue
                     FilterPodcastsByCategory(selectedCategory.Name);
                 }
             }
-            else
-            {
-                MessageBox.Show("Error: Invalid category selected.");
-            }
+            //else
+            //{
+            //    MessageBox.Show("Error: Invalid category selected.");
+            //}
         }
 
         private void RefreshComboBox()
@@ -381,6 +412,115 @@ namespace PodcastCatalogue
         {
 
         }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (categoryListBox.SelectedItem != null)
+            {
+                string selectedCategoryName = categoryListBox.SelectedItem.ToString();
+
+                // Show confirmation dialog
+                var confirmationResult = MessageBox.Show(
+                    $"Are you sure you want to delete the category '{selectedCategoryName}'?",
+                    "Confirm Deletion",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+
+                if (confirmationResult == DialogResult.Yes)
+                {
+                    var appData = poddRepository.ReadFromFile();
+                    var categoryToRemove = appData.Categories.FirstOrDefault(c => c.Name.Equals(selectedCategoryName, StringComparison.OrdinalIgnoreCase));
+
+                    if (categoryToRemove != null)
+                    {
+                        // Call to remove the category from the repository
+                        poddRepository.RemoveCategory(categoryToRemove);
+
+                        // Refresh both the category ListBox and the podcast DataGrid
+                        RefreshCategoryListBox(); // Refresh the ListBox to show updated categories
+                        RefreshComboBox(); // Refresh the ComboBox to remove the deleted category
+                        RefreshPodcastDataGrid(); // Refresh the DataGrid to reflect the changes in podcasts
+
+                        MessageBox.Show("Category deleted successfully.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Category not found.");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a category to delete.");
+            }
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            if (categoryListBox.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a category to rename.");
+                return;
+            }
+
+            string newCategoryName = textBox1.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(newCategoryName))
+            {
+                MessageBox.Show("Category name cannot be empty.");
+                return;
+            }
+
+            // Get the selected category
+            string selectedCategoryName = categoryListBox.SelectedItem.ToString();
+
+            // Find the category in the repository
+            var categoryToRename = poddRepository.ReadFromFile().Categories
+                .FirstOrDefault(c => c.Name.Equals(selectedCategoryName, StringComparison.OrdinalIgnoreCase));
+
+            if (categoryToRename != null)
+            {
+                // Check if the new category name already exists
+                if (poddRepository.ReadFromFile().Categories.Any(c => c.Name.Equals(newCategoryName, StringComparison.OrdinalIgnoreCase)))
+                {
+                    MessageBox.Show("Category name already exists.");
+                    return;
+                }
+
+                // Change the name of the selected category
+                categoryToRename.Name = newCategoryName;
+
+                // Save the updated categories
+                poddRepository.SaveToFile(poddRepository.ReadFromFile()); // Ensure the changes are saved
+
+                // Refresh UI components
+                RefreshCategoryListBox();
+                RefreshComboBox();
+
+                // Optionally, refresh the podcast data grid if necessary
+                RefreshPodcastDataGrid(); // To refresh podcasts with the updated category
+
+                MessageBox.Show("Category renamed successfully.");
+            }
+            else
+            {
+                MessageBox.Show("Selected category not found.");
+            }
+        }
+
+
+
+
+        private void textBox1_TextChanged_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }
+
 

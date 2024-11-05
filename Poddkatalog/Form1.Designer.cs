@@ -46,6 +46,10 @@ namespace PodcastCatalogue
             label2 = new Label();
             label3 = new Label();
             label4 = new Label();
+            categoryListBox = new ListBox();
+            button1 = new Button();
+            textBox1 = new TextBox();
+            Redigera = new Button();
             ((System.ComponentModel.ISupportInitialize)podcastDataGrid).BeginInit();
             ((System.ComponentModel.ISupportInitialize)episodeDataGrid).BeginInit();
             SuspendLayout();
@@ -231,17 +235,58 @@ namespace PodcastCatalogue
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(985, 147);
+            label4.Location = new Point(1071, 147);
             label4.Name = "label4";
             label4.Size = new Size(256, 32);
             label4.TabIndex = 17;
             label4.Text = "Sök episod efter namn";
+            // 
+            // categoryListBox
+            // 
+            categoryListBox.FormattingEnabled = true;
+            categoryListBox.Location = new Point(1071, 12);
+            categoryListBox.Name = "categoryListBox";
+            categoryListBox.Size = new Size(240, 100);
+            categoryListBox.TabIndex = 18;
+            categoryListBox.SelectedIndexChanged += listBox1_SelectedIndexChanged;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(902, 7);
+            button1.Name = "button1";
+            button1.Size = new Size(150, 72);
+            button1.TabIndex = 19;
+            button1.Text = "Ta bort kategori";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(622, 36);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(200, 39);
+            textBox1.TabIndex = 20;
+            textBox1.TextChanged += textBox1_TextChanged_1;
+            // 
+            // Redigera
+            // 
+            Redigera.Location = new Point(902, 79);
+            Redigera.Name = "Redigera";
+            Redigera.Size = new Size(150, 81);
+            Redigera.TabIndex = 21;
+            Redigera.Text = "Ändra namn";
+            Redigera.UseVisualStyleBackColor = true;
+            Redigera.Click += button2_Click_1;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1902, 1171);
+            Controls.Add(Redigera);
+            Controls.Add(textBox1);
+            Controls.Add(button1);
+            Controls.Add(categoryListBox);
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(label2);
@@ -286,5 +331,9 @@ namespace PodcastCatalogue
         private Label label2;
         private Label label3;
         private Label label4;
+        private ListBox categoryListBox;
+        private Button button1;
+        private TextBox textBox1;
+        private Button Redigera;
     }
 }
