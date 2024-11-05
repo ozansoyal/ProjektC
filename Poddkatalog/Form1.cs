@@ -92,7 +92,7 @@ namespace PodcastCatalogue
             podds = appData.Podcasts;
             var categories = appData.Categories;
 
-            
+
 
             RefreshPodcastDataGrid();
             podcastDataGrid.Columns["Description"].Visible = false;
@@ -337,7 +337,7 @@ namespace PodcastCatalogue
             categoryListBox.Items.Clear();
 
             // Re-add "Visa alla" to the category list
-            
+
 
             // Set the new data source for the combo box
             categoryComboBox.DataSource = categories;
@@ -477,34 +477,37 @@ namespace PodcastCatalogue
                 return;
             }
 
-            // Get the selected category
             string selectedCategoryName = categoryListBox.SelectedItem.ToString();
 
-            // Find the category in the repository
-            var categoryToRename = poddRepository.ReadFromFile().Categories
-                .FirstOrDefault(c => c.Name.Equals(selectedCategoryName, StringComparison.OrdinalIgnoreCase));
+            var appData = poddRepository.ReadFromFile();
+            var categories = appData.Categories;
+            var podcasts = appData.Podcasts;
+
+            var categoryToRename = categories.FirstOrDefault(c => c.Name.Equals(selectedCategoryName, StringComparison.OrdinalIgnoreCase));
 
             if (categoryToRename != null)
             {
-                // Check if the new category name already exists
-                if (poddRepository.ReadFromFile().Categories.Any(c => c.Name.Equals(newCategoryName, StringComparison.OrdinalIgnoreCase)))
+                if (categories.Any(c => c.Name.Equals(newCategoryName, StringComparison.OrdinalIgnoreCase)))
                 {
                     MessageBox.Show("Category name already exists.");
                     return;
                 }
 
-                // Change the name of the selected category
                 categoryToRename.Name = newCategoryName;
 
-                // Save the updated categories
-                poddRepository.SaveToFile(poddRepository.ReadFromFile()); // Ensure the changes are saved
+                foreach (var podcast in podcasts)
+                {
+                    if (podcast.Category.Equals(selectedCategoryName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        podcast.Category = newCategoryName;
+                    }
+                }
 
-                // Refresh UI components
+                poddRepository.SaveToFile(appData);
+
                 RefreshCategoryListBox();
                 RefreshComboBox();
-
-                // Optionally, refresh the podcast data grid if necessary
-                RefreshPodcastDataGrid(); // To refresh podcasts with the updated category
+                RefreshPodcastDataGrid();
 
                 MessageBox.Show("Category renamed successfully.");
             }
@@ -517,6 +520,9 @@ namespace PodcastCatalogue
 
 
 
+
+
+
         private void textBox1_TextChanged_1(object sender, EventArgs e)
         {
 
@@ -525,9 +531,10 @@ namespace PodcastCatalogue
         private void VisaAllaBtn_Click(object sender, EventArgs e)
         {
 
-            try { 
-            categoryListBox.ClearSelected();
-            categoryComboBox.SelectedIndex = -1;
+            try
+            {
+                categoryListBox.ClearSelected();
+                categoryComboBox.SelectedIndex = -1;
                 RefreshComboBox();
                 RefreshCategoryListBox();
                 RefreshPodcastDataGrid();
