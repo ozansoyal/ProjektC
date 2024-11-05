@@ -143,23 +143,23 @@ namespace Datalagring
         {
             var appData = ReadFromFile();
 
-            // Find and remove the category from the categories list
+            
             var categoryToRemove = appData.Categories.FirstOrDefault(c => c.Name.Equals(category.Name, StringComparison.OrdinalIgnoreCase));
 
             if (categoryToRemove != null)
             {
                 appData.Categories.Remove(categoryToRemove);
 
-                // Optionally, remove or reassign podcasts with this category
+                
                 var podcastsToRemove = appData.Podcasts.Where(p => p.Category.Equals(categoryToRemove.Name, StringComparison.OrdinalIgnoreCase)).ToList();
 
                 foreach (var podcast in podcastsToRemove)
                 {
-                    // For example, you could just set the category to "Uncategorized" or a similar approach
-                    podcast.Category = ""; // or remove the podcast if that's the intended functionality
+                    
+                    podcast.Category = ""; 
                 }
 
-                // Save the updated appData back to the file
+                
                 SaveToFile(appData);
             }
             else
