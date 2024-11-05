@@ -47,10 +47,11 @@ namespace PodcastCatalogue
             label3 = new Label();
             label4 = new Label();
             categoryListBox = new ListBox();
-            button1 = new Button();
-            textBox1 = new TextBox();
-            Redigera = new Button();
+            removeCategoryBtn = new Button();
+            categoryNameTextBox = new TextBox();
+            renameCategoryBtn = new Button();
             VisaAllaBtn = new Button();
+            label5 = new Label();
             ((System.ComponentModel.ISupportInitialize)podcastDataGrid).BeginInit();
             ((System.ComponentModel.ISupportInitialize)episodeDataGrid).BeginInit();
             SuspendLayout();
@@ -251,33 +252,33 @@ namespace PodcastCatalogue
             categoryListBox.TabIndex = 18;
             categoryListBox.SelectedIndexChanged += listBox1_SelectedIndexChanged;
             // 
-            // button1
+            // removeCategoryBtn
             // 
-            button1.Location = new Point(902, 7);
-            button1.Name = "button1";
-            button1.Size = new Size(150, 72);
-            button1.TabIndex = 19;
-            button1.Text = "Ta bort kategori";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            removeCategoryBtn.Location = new Point(902, 7);
+            removeCategoryBtn.Name = "removeCategoryBtn";
+            removeCategoryBtn.Size = new Size(150, 72);
+            removeCategoryBtn.TabIndex = 19;
+            removeCategoryBtn.Text = "Ta bort kategori";
+            removeCategoryBtn.UseVisualStyleBackColor = true;
+            removeCategoryBtn.Click += button1_Click;
             // 
-            // textBox1
+            // categoryNameTextBox
             // 
-            textBox1.Location = new Point(622, 36);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(200, 39);
-            textBox1.TabIndex = 20;
-            textBox1.TextChanged += textBox1_TextChanged_1;
+            categoryNameTextBox.Location = new Point(703, 42);
+            categoryNameTextBox.Name = "categoryNameTextBox";
+            categoryNameTextBox.Size = new Size(200, 39);
+            categoryNameTextBox.TabIndex = 20;
+            categoryNameTextBox.TextChanged += textBox1_TextChanged_1;
             // 
-            // Redigera
+            // renameCategoryBtn
             // 
-            Redigera.Location = new Point(902, 79);
-            Redigera.Name = "Redigera";
-            Redigera.Size = new Size(150, 81);
-            Redigera.TabIndex = 21;
-            Redigera.Text = "Ändra namn";
-            Redigera.UseVisualStyleBackColor = true;
-            Redigera.Click += button2_Click_1;
+            renameCategoryBtn.Location = new Point(902, 79);
+            renameCategoryBtn.Name = "renameCategoryBtn";
+            renameCategoryBtn.Size = new Size(150, 81);
+            renameCategoryBtn.TabIndex = 21;
+            renameCategoryBtn.Text = "Ändra namn";
+            renameCategoryBtn.UseVisualStyleBackColor = true;
+            renameCategoryBtn.Click += button2_Click_1;
             // 
             // VisaAllaBtn
             // 
@@ -289,15 +290,25 @@ namespace PodcastCatalogue
             VisaAllaBtn.UseVisualStyleBackColor = true;
             VisaAllaBtn.Click += VisaAllaBtn_Click;
             // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(703, 9);
+            label5.Name = "label5";
+            label5.Size = new Size(128, 32);
+            label5.TabIndex = 23;
+            label5.Text = "Nytt namn";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1902, 1171);
+            Controls.Add(label5);
             Controls.Add(VisaAllaBtn);
-            Controls.Add(Redigera);
-            Controls.Add(textBox1);
-            Controls.Add(button1);
+            Controls.Add(renameCategoryBtn);
+            Controls.Add(categoryNameTextBox);
+            Controls.Add(removeCategoryBtn);
             Controls.Add(categoryListBox);
             Controls.Add(label4);
             Controls.Add(label3);
@@ -344,9 +355,10 @@ namespace PodcastCatalogue
         private Label label3;
         private Label label4;
         private ListBox categoryListBox;
-        private Button button1;
-        private TextBox textBox1;
-        private Button Redigera;
+        private Button removeCategoryBtn;
+        private TextBox categoryNameTextBox;
+        private Button renameCategoryBtn;
         private Button VisaAllaBtn;
+        private Label label5;
     }
 }

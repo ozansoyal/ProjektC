@@ -43,8 +43,6 @@ namespace PodcastCatalogue
             var appData = poddRepository.ReadFromFile();
             podds = appData.Podcasts;
 
-            // If necessary, update podcasts' categories here based on your specific needs.
-
             podcastDataGrid.DataSource = null;
             podcastDataGrid.DataSource = podds;
             podcastDataGrid.ClearSelection();
@@ -77,7 +75,7 @@ namespace PodcastCatalogue
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: kunde inte hämta från RSS, se över länk");
+                MessageBox.Show("Kunde inte hämta från RSS, se över länk");
             }
         }
 
@@ -101,6 +99,8 @@ namespace PodcastCatalogue
             categoryComboBox.DataSource = categories;
             categoryComboBox.DisplayMember = "Name";
             RefreshCategoryListBox();
+            visaAlla();
+
 
         }
 
@@ -153,7 +153,7 @@ namespace PodcastCatalogue
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: Podcast lista är tom");
+                MessageBox.Show("Podcast lista är tom");
             }
         }
 
@@ -267,7 +267,7 @@ namespace PodcastCatalogue
             }
             else
             {
-                MessageBox.Show("No podcasts available to filter.");
+                MessageBox.Show("Inga podcasts att filtrera.");
             }
         }
 
@@ -293,7 +293,7 @@ namespace PodcastCatalogue
             }
             else
             {
-                MessageBox.Show("No episodes available to filter.");
+                MessageBox.Show("Inga avsnitt att filtrera.");
             }
         }
 
@@ -307,20 +307,18 @@ namespace PodcastCatalogue
         {
             if (string.IsNullOrWhiteSpace(addCategoryTextbox.Text.Trim()))
             {
-                MessageBox.Show("Category name cannot be empty");
+                MessageBox.Show("Kategori namn får ej vara tomt");
                 return;
             }
 
             var categories = poddRepository.ReadFromFile().Categories;
 
-            // Check if the category already exists
             if (categories.Any(c => c.Name.Equals(addCategoryTextbox.Text.Trim(), StringComparison.OrdinalIgnoreCase)))
             {
-                MessageBox.Show("Category already exists");
+                MessageBox.Show("Kategori finns redan");
                 return;
             }
 
-            // Add the new category
             Category category = new Category(addCategoryTextbox.Text.Trim());
             poddRepository.AddCategory(category);
             RefreshCategoriesWithVisaAlla();
@@ -329,21 +327,14 @@ namespace PodcastCatalogue
 
         private void RefreshCategoriesWithVisaAlla()
         {
-            // Read categories from the repository
             var categories = poddRepository.ReadFromFile().Categories;
 
-            // Clear existing items
             categoryComboBox.DataSource = null;
             categoryListBox.Items.Clear();
 
-            // Re-add "Visa alla" to the category list
-
-
-            // Set the new data source for the combo box
             categoryComboBox.DataSource = categories;
             categoryComboBox.DisplayMember = "Name";
 
-            // Refresh the list box
             foreach (var category in categories)
             {
                 categoryListBox.Items.Add(category.Name);
@@ -365,7 +356,7 @@ namespace PodcastCatalogue
             }
             else
             {
-                MessageBox.Show("No podcasts available to filter.");
+                MessageBox.Show("Finns ej podcast med vald kategori.");
             }
         }
 
@@ -425,9 +416,8 @@ namespace PodcastCatalogue
             {
                 string selectedCategoryName = categoryListBox.SelectedItem.ToString();
 
-                // Show confirmation dialog
                 var confirmationResult = MessageBox.Show(
-                    $"Are you sure you want to delete the category '{selectedCategoryName}'?",
+                    $"Tag bort '{selectedCategoryName}'?",
                     "Confirm Deletion",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning);
@@ -439,25 +429,23 @@ namespace PodcastCatalogue
 
                     if (categoryToRemove != null)
                     {
-                        // Call to remove the category from the repository
                         poddRepository.RemoveCategory(categoryToRemove);
 
-                        // Refresh both the category ListBox and the podcast DataGrid
-                        RefreshCategoryListBox(); // Refresh the ListBox to show updated categories
-                        RefreshComboBox(); // Refresh the ComboBox to remove the deleted category
-                        RefreshPodcastDataGrid(); // Refresh the DataGrid to reflect the changes in podcasts
+                        RefreshCategoryListBox(); 
+                        RefreshComboBox(); 
+                        RefreshPodcastDataGrid(); 
 
-                        MessageBox.Show("Category deleted successfully.");
+                        MessageBox.Show("Kategori borttagen.");
                     }
                     else
                     {
-                        MessageBox.Show("Category not found.");
+                        MessageBox.Show("Kategori finns ej.");
                     }
                 }
             }
             else
             {
-                MessageBox.Show("Please select a category to delete.");
+                MessageBox.Show("Välj en kategori.");
             }
         }
 
@@ -465,15 +453,15 @@ namespace PodcastCatalogue
         {
             if (categoryListBox.SelectedItem == null)
             {
-                MessageBox.Show("Please select a category to rename.");
+                MessageBox.Show("Välj en kategori.");
                 return;
             }
 
-            string newCategoryName = textBox1.Text.Trim();
+            string newCategoryName = categoryNameTextBox.Text.Trim();
 
             if (string.IsNullOrWhiteSpace(newCategoryName))
             {
-                MessageBox.Show("Category name cannot be empty.");
+                MessageBox.Show("Välj en kategori.");
                 return;
             }
 
@@ -489,7 +477,7 @@ namespace PodcastCatalogue
             {
                 if (categories.Any(c => c.Name.Equals(newCategoryName, StringComparison.OrdinalIgnoreCase)))
                 {
-                    MessageBox.Show("Category name already exists.");
+                    MessageBox.Show("Finns redan en kategori med det namn.");
                     return;
                 }
 
@@ -509,19 +497,13 @@ namespace PodcastCatalogue
                 RefreshComboBox();
                 RefreshPodcastDataGrid();
 
-                MessageBox.Show("Category renamed successfully.");
+                MessageBox.Show("Kategori har bytt namn.");
             }
             else
             {
-                MessageBox.Show("Selected category not found.");
+                MessageBox.Show("Vald kategori hittades ej.");
             }
         }
-
-
-
-
-
-
 
         private void textBox1_TextChanged_1(object sender, EventArgs e)
         {
@@ -530,7 +512,10 @@ namespace PodcastCatalogue
 
         private void VisaAllaBtn_Click(object sender, EventArgs e)
         {
-
+            visaAlla();
+        }
+        private void visaAlla()
+        {
             try
             {
                 categoryListBox.ClearSelected();
@@ -541,9 +526,8 @@ namespace PodcastCatalogue
             }
             catch
             {
-                MessageBox.Show("visar redan alla");
+                MessageBox.Show("Visar redan alla poddar");
             }
-
         }
     }
 }
