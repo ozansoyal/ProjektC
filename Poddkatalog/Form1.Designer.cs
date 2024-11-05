@@ -50,6 +50,7 @@ namespace PodcastCatalogue
             button1 = new Button();
             textBox1 = new TextBox();
             Redigera = new Button();
+            VisaAllaBtn = new Button();
             ((System.ComponentModel.ISupportInitialize)podcastDataGrid).BeginInit();
             ((System.ComponentModel.ISupportInitialize)episodeDataGrid).BeginInit();
             SuspendLayout();
@@ -62,7 +63,7 @@ namespace PodcastCatalogue
             podcastDataGrid.AllowUserToResizeRows = false;
             podcastDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             podcastDataGrid.EditMode = DataGridViewEditMode.EditProgrammatically;
-            podcastDataGrid.Location = new Point(69, 252);
+            podcastDataGrid.Location = new Point(69, 278);
             podcastDataGrid.Margin = new Padding(6);
             podcastDataGrid.MultiSelect = false;
             podcastDataGrid.Name = "podcastDataGrid";
@@ -124,7 +125,7 @@ namespace PodcastCatalogue
             episodeDataGrid.AllowUserToResizeRows = false;
             episodeDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             episodeDataGrid.EditMode = DataGridViewEditMode.EditProgrammatically;
-            episodeDataGrid.Location = new Point(985, 252);
+            episodeDataGrid.Location = new Point(985, 278);
             episodeDataGrid.Margin = new Padding(6);
             episodeDataGrid.MultiSelect = false;
             episodeDataGrid.Name = "episodeDataGrid";
@@ -278,11 +279,22 @@ namespace PodcastCatalogue
             Redigera.UseVisualStyleBackColor = true;
             Redigera.Click += button2_Click_1;
             // 
+            // VisaAllaBtn
+            // 
+            VisaAllaBtn.Location = new Point(69, 223);
+            VisaAllaBtn.Name = "VisaAllaBtn";
+            VisaAllaBtn.Size = new Size(150, 46);
+            VisaAllaBtn.TabIndex = 22;
+            VisaAllaBtn.Text = "Visa Alla";
+            VisaAllaBtn.UseVisualStyleBackColor = true;
+            VisaAllaBtn.Click += VisaAllaBtn_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1902, 1171);
+            Controls.Add(VisaAllaBtn);
             Controls.Add(Redigera);
             Controls.Add(textBox1);
             Controls.Add(button1);
@@ -335,5 +347,6 @@ namespace PodcastCatalogue
         private Button button1;
         private TextBox textBox1;
         private Button Redigera;
+        private Button VisaAllaBtn;
     }
 }

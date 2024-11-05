@@ -92,7 +92,7 @@ namespace PodcastCatalogue
             podds = appData.Podcasts;
             var categories = appData.Categories;
 
-            categories.Insert(0, new Category { Name = "Visa alla" });
+            
 
             RefreshPodcastDataGrid();
             podcastDataGrid.Columns["Description"].Visible = false;
@@ -101,7 +101,7 @@ namespace PodcastCatalogue
             categoryComboBox.DataSource = categories;
             categoryComboBox.DisplayMember = "Name";
             RefreshCategoryListBox();
-            
+
         }
 
         private void RefreshCategoryListBox()
@@ -337,7 +337,7 @@ namespace PodcastCatalogue
             categoryListBox.Items.Clear();
 
             // Re-add "Visa alla" to the category list
-            categories.Insert(0, new Category { Name = "Visa alla" });
+            
 
             // Set the new data source for the combo box
             categoryComboBox.DataSource = categories;
@@ -373,19 +373,20 @@ namespace PodcastCatalogue
         {
             if (categoryComboBox.SelectedItem != null && categoryComboBox.SelectedItem is Category selectedCategory)
             {
-                if (selectedCategory.Name == "Visa alla")
-                {
-                    RefreshPodcastDataGrid();
-                }
-                else
-                {
-                    FilterPodcastsByCategory(selectedCategory.Name);
-                }
+                //if (selectedCategory.Name == "Visa alla")
+                //{
+                //    RefreshPodcastDataGrid();
+                //}
+                //else
+                //{
+                FilterPodcastsByCategory(selectedCategory.Name);
+                //    }
+                //}
+                //else
+                //{
+                //    MessageBox.Show("Error: Invalid category selected.");
+                //}
             }
-            //else
-            //{
-            //    MessageBox.Show("Error: Invalid category selected.");
-            //}
         }
 
         private void RefreshComboBox()
@@ -518,6 +519,23 @@ namespace PodcastCatalogue
 
         private void textBox1_TextChanged_1(object sender, EventArgs e)
         {
+
+        }
+
+        private void VisaAllaBtn_Click(object sender, EventArgs e)
+        {
+
+            try { 
+            categoryListBox.ClearSelected();
+            categoryComboBox.SelectedIndex = -1;
+                RefreshComboBox();
+                RefreshCategoryListBox();
+                RefreshPodcastDataGrid();
+            }
+            catch
+            {
+                MessageBox.Show("visar redan alla");
+            }
 
         }
     }
