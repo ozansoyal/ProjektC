@@ -36,7 +36,7 @@ namespace PodcastCatalogue
             poddSearchField = new TextBox();
             rssInputField = new TextBox();
             episodeDataGrid = new DataGridView();
-            textBox3 = new TextBox();
+            episodeSearchTextBox = new TextBox();
             podcastDesc = new TextBox();
             episodeDesc = new TextBox();
             categoryComboBox = new ComboBox();
@@ -116,7 +116,6 @@ namespace PodcastCatalogue
             rssInputField.Name = "rssInputField";
             rssInputField.Size = new Size(622, 39);
             rssInputField.TabIndex = 6;
-            rssInputField.TextChanged += textBox2_TextChanged;
             // 
             // episodeDataGrid
             // 
@@ -137,16 +136,15 @@ namespace PodcastCatalogue
             episodeDataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             episodeDataGrid.Size = new Size(853, 424);
             episodeDataGrid.TabIndex = 7;
-            episodeDataGrid.CellContentClick += episodeDataGrid_CellContentClick;
             // 
-            // textBox3
+            // episodeSearchTextBox
             // 
-            textBox3.Location = new Point(985, 185);
-            textBox3.Margin = new Padding(6);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(605, 39);
-            textBox3.TabIndex = 8;
-            textBox3.TextChanged += textBox3_TextChanged;
+            episodeSearchTextBox.Location = new Point(985, 185);
+            episodeSearchTextBox.Margin = new Padding(6);
+            episodeSearchTextBox.Name = "episodeSearchTextBox";
+            episodeSearchTextBox.Size = new Size(605, 39);
+            episodeSearchTextBox.TabIndex = 8;
+            episodeSearchTextBox.TextChanged += episodeSearchTextBox_TextChanged;
             // 
             // podcastDesc
             // 
@@ -159,7 +157,6 @@ namespace PodcastCatalogue
             podcastDesc.ScrollBars = ScrollBars.Vertical;
             podcastDesc.Size = new Size(853, 402);
             podcastDesc.TabIndex = 9;
-            podcastDesc.TextChanged += podcastDesc_TextChanged;
             // 
             // episodeDesc
             // 
@@ -172,7 +169,6 @@ namespace PodcastCatalogue
             episodeDesc.ScrollBars = ScrollBars.Vertical;
             episodeDesc.Size = new Size(853, 402);
             episodeDesc.TabIndex = 10;
-            episodeDesc.TextChanged += episodeDesc_TextChanged;
             // 
             // categoryComboBox
             // 
@@ -187,16 +183,15 @@ namespace PodcastCatalogue
             // 
             // addCategoryTextbox
             // 
-            addCategoryTextbox.Location = new Point(1389, 53);
+            addCategoryTextbox.Location = new Point(1401, 6);
             addCategoryTextbox.Margin = new Padding(4, 2, 4, 2);
             addCategoryTextbox.Name = "addCategoryTextbox";
-            addCategoryTextbox.Size = new Size(201, 39);
+            addCategoryTextbox.Size = new Size(240, 39);
             addCategoryTextbox.TabIndex = 12;
-            addCategoryTextbox.TextChanged += textBox1_TextChanged;
             // 
             // addCategoryBtn
             // 
-            addCategoryBtn.Location = new Point(1598, 49);
+            addCategoryBtn.Location = new Point(1649, 2);
             addCategoryBtn.Margin = new Padding(4, 2, 4, 2);
             addCategoryBtn.Name = "addCategoryBtn";
             addCategoryBtn.Size = new Size(240, 47);
@@ -213,7 +208,6 @@ namespace PodcastCatalogue
             label1.Size = new Size(294, 32);
             label1.TabIndex = 14;
             label1.Text = "Lägg till podcast med länk";
-            label1.Click += label1_Click;
             // 
             // label2
             // 
@@ -223,7 +217,6 @@ namespace PodcastCatalogue
             label2.Size = new Size(268, 32);
             label2.TabIndex = 15;
             label2.Text = "Sök podcast efter namn";
-            label2.Click += label2_Click;
             // 
             // label3
             // 
@@ -246,39 +239,39 @@ namespace PodcastCatalogue
             // categoryListBox
             // 
             categoryListBox.FormattingEnabled = true;
-            categoryListBox.Location = new Point(1071, 12);
+            categoryListBox.Location = new Point(1401, 56);
             categoryListBox.Name = "categoryListBox";
             categoryListBox.Size = new Size(240, 100);
             categoryListBox.TabIndex = 18;
-            categoryListBox.SelectedIndexChanged += listBox1_SelectedIndexChanged;
             // 
             // removeCategoryBtn
             // 
-            removeCategoryBtn.Location = new Point(902, 7);
+            removeCategoryBtn.BackColor = Color.Red;
+            removeCategoryBtn.ForeColor = SystemColors.ButtonHighlight;
+            removeCategoryBtn.Location = new Point(1204, 56);
             removeCategoryBtn.Name = "removeCategoryBtn";
-            removeCategoryBtn.Size = new Size(150, 72);
+            removeCategoryBtn.Size = new Size(191, 48);
             removeCategoryBtn.TabIndex = 19;
             removeCategoryBtn.Text = "Ta bort kategori";
-            removeCategoryBtn.UseVisualStyleBackColor = true;
-            removeCategoryBtn.Click += button1_Click;
+            removeCategoryBtn.UseVisualStyleBackColor = false;
+            removeCategoryBtn.Click += removeCategoryBtn_Click;
             // 
             // categoryNameTextBox
             // 
-            categoryNameTextBox.Location = new Point(703, 42);
+            categoryNameTextBox.Location = new Point(1647, 89);
             categoryNameTextBox.Name = "categoryNameTextBox";
-            categoryNameTextBox.Size = new Size(200, 39);
+            categoryNameTextBox.Size = new Size(242, 39);
             categoryNameTextBox.TabIndex = 20;
-            categoryNameTextBox.TextChanged += textBox1_TextChanged_1;
             // 
             // renameCategoryBtn
             // 
-            renameCategoryBtn.Location = new Point(902, 79);
+            renameCategoryBtn.Location = new Point(1649, 134);
             renameCategoryBtn.Name = "renameCategoryBtn";
-            renameCategoryBtn.Size = new Size(150, 81);
+            renameCategoryBtn.Size = new Size(240, 45);
             renameCategoryBtn.TabIndex = 21;
             renameCategoryBtn.Text = "Ändra namn";
             renameCategoryBtn.UseVisualStyleBackColor = true;
-            renameCategoryBtn.Click += button2_Click_1;
+            renameCategoryBtn.Click += renameCategoryBtn_Click_1;
             // 
             // VisaAllaBtn
             // 
@@ -293,7 +286,7 @@ namespace PodcastCatalogue
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(703, 9);
+            label5.Location = new Point(1649, 51);
             label5.Name = "label5";
             label5.Size = new Size(128, 32);
             label5.TabIndex = 23;
@@ -319,7 +312,7 @@ namespace PodcastCatalogue
             Controls.Add(categoryComboBox);
             Controls.Add(episodeDesc);
             Controls.Add(podcastDesc);
-            Controls.Add(textBox3);
+            Controls.Add(episodeSearchTextBox);
             Controls.Add(episodeDataGrid);
             Controls.Add(rssInputField);
             Controls.Add(poddSearchField);
@@ -344,7 +337,7 @@ namespace PodcastCatalogue
         private TextBox poddSearchField;
         private TextBox rssInputField;
         private DataGridView episodeDataGrid;
-        private TextBox textBox3;
+        private TextBox episodeSearchTextBox;
         private TextBox podcastDesc;
         private TextBox episodeDesc;
         private ComboBox categoryComboBox;

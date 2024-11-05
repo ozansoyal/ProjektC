@@ -26,12 +26,6 @@ namespace PodcastCatalogue
             episodeDataGrid.SelectionChanged += episodeDataGrid_SelectionChanged;
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            string text = poddSearchField.Text;
-            validator.ValidateSearchInput(text);
-        }
-
         private void poddSearchField_TextChanged(object sender, EventArgs e)
         {
             string searchText = poddSearchField.Text;
@@ -79,10 +73,6 @@ namespace PodcastCatalogue
             }
         }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -157,20 +147,6 @@ namespace PodcastCatalogue
             }
         }
 
-        private void episodeDesc_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void episodeDataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void podcastDesc_TextChanged(object sender, EventArgs e)
-        {
-
-        }
         public async Task SetEpisodeDatagridNull()
         {
             episodeDataGrid.DataSource = null;
@@ -298,10 +274,7 @@ namespace PodcastCatalogue
         }
 
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+   
 
         private void addCategoryBtn_Click(object sender, EventArgs e)
         {
@@ -389,28 +362,15 @@ namespace PodcastCatalogue
             categoryComboBox.DisplayMember = "Name";
         }
 
-        private void textBox3_TextChanged(object sender, EventArgs e)
+        private void episodeSearchTextBox_TextChanged(object sender, EventArgs e)
         {
-            string searchText = textBox3.Text;
+            string searchText = episodeSearchTextBox.Text;
             FilterEpisodeByTitle(searchText);
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
+       
 
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
+        private void removeCategoryBtn_Click(object sender, EventArgs e)
         {
             if (categoryListBox.SelectedItem != null)
             {
@@ -449,7 +409,7 @@ namespace PodcastCatalogue
             }
         }
 
-        private void button2_Click_1(object sender, EventArgs e)
+        private void renameCategoryBtn_Click_1(object sender, EventArgs e)
         {
             if (categoryListBox.SelectedItem == null)
             {
@@ -505,10 +465,7 @@ namespace PodcastCatalogue
             }
         }
 
-        private void textBox1_TextChanged_1(object sender, EventArgs e)
-        {
-
-        }
+       
 
         private void VisaAllaBtn_Click(object sender, EventArgs e)
         {
