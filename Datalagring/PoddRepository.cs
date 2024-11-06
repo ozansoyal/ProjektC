@@ -17,7 +17,7 @@ namespace Datalagring
             {
                 if (p.Title == podd.Title)
                 {
-                    throw new Exception("Podcast already exists.");
+                    throw new Exception("Podcast existerar redan.");
                 }
             }
             appData.Podcasts.Add(podd);
@@ -132,7 +132,7 @@ namespace Datalagring
             {
                 if (c.Name == category.Name)
                 {
-                    throw new Exception("Category already exists.");
+                    throw new Exception("Kategori existerar redan.");
                 }
             }
             appData.Categories.Add(category);
@@ -164,7 +164,7 @@ namespace Datalagring
             }
             else
             {
-                throw new Exception("Category not found in the list.");
+                throw new Exception("Kategori hittades ej.");
             }
         }
 
@@ -176,11 +176,11 @@ namespace Datalagring
             {
                 await Task.Run(() => appData.Podcasts.Remove(podcastToRemove));
                 await SaveToFileAsync(appData);
-                Console.WriteLine("Podcast removed successfully.");
+                Console.WriteLine("Borttagning av podcast lyckades.");
             }
             else
             {
-                Console.WriteLine("Podcast not found in the list.");
+                Console.WriteLine("Podcast finns ej i listan.");
             }
         }
         public async Task RemovePodcastByNameAsync(string podcastName)
@@ -190,11 +190,11 @@ namespace Datalagring
             {
                 await Task.Run(() => appData.Podcasts.Remove(podcastToRemove));
                 await SaveToFileAsync(appData);
-                Console.WriteLine("Podcast removed successfully.");
+                Console.WriteLine("Borttagning av podcast lyckades");
             }
             else
             {
-                Console.WriteLine("Podcast not found in the list.");
+                Console.WriteLine("Podcast finns ej i listan.");
             }
         }
     }
