@@ -274,7 +274,7 @@ namespace PodcastCatalogue
         }
 
 
-   
+
 
         private void addCategoryBtn_Click(object sender, EventArgs e)
         {
@@ -368,7 +368,7 @@ namespace PodcastCatalogue
             FilterEpisodeByTitle(searchText);
         }
 
-       
+
 
         private void removeCategoryBtn_Click(object sender, EventArgs e)
         {
@@ -391,9 +391,9 @@ namespace PodcastCatalogue
                     {
                         poddRepository.RemoveCategory(categoryToRemove);
 
-                        RefreshCategoryListBox(); 
-                        RefreshComboBox(); 
-                        RefreshPodcastDataGrid(); 
+                        RefreshCategoryListBox();
+                        RefreshComboBox();
+                        RefreshPodcastDataGrid();
 
                         MessageBox.Show("Kategori borttagen.");
                     }
@@ -465,7 +465,7 @@ namespace PodcastCatalogue
             }
         }
 
-       
+
 
         private void VisaAllaBtn_Click(object sender, EventArgs e)
         {
@@ -483,9 +483,10 @@ namespace PodcastCatalogue
             }
             catch
             {
-                MessageBox.Show("Visar redan alla poddar");
+                MessageBox.Show("Visar redan alla podcast");
             }
         }
+
     }
 }
 
