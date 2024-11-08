@@ -116,7 +116,7 @@ namespace PodcastCatalogue
             rssInputField.Name = "rssInputField";
             rssInputField.Size = new Size(622, 39);
             rssInputField.TabIndex = 6;
-            rssInputField.TextChanged += rssInputField_TextChanged;
+            
             // 
             // episodeDataGrid
             // 
