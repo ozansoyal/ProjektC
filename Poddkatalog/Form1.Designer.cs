@@ -2,6 +2,7 @@
 
 namespace PodcastCatalogue
 {
+    //test kommentar.
     partial class Form1
     {
         /// <summary>
