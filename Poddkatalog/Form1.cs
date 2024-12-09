@@ -450,13 +450,15 @@ namespace PodcastCatalogue
 
                 categoryToRename.Name = newCategoryName;
 
+               
                 foreach (var podcast in podcasts)
                 {
-                    if (podcast.Category.Equals(selectedCategoryName, StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrEmpty(podcast.Category) && podcast.Category.Equals(selectedCategoryName, StringComparison.OrdinalIgnoreCase))
                     {
                         podcast.Category = newCategoryName;
                     }
                 }
+
 
                 poddRepository.SaveToFile(appData);
 
