@@ -143,23 +143,24 @@ namespace Datalagring
         {
             var appData = ReadFromFile();
 
-            
             var categoryToRemove = appData.Categories.FirstOrDefault(c => c.Name.Equals(category.Name, StringComparison.OrdinalIgnoreCase));
 
             if (categoryToRemove != null)
             {
                 appData.Categories.Remove(categoryToRemove);
 
-                
-                var podcastsToRemove = appData.Podcasts.Where(p => p.Category.Equals(categoryToRemove.Name, StringComparison.OrdinalIgnoreCase)).ToList();
-
-                foreach (var podcast in podcastsToRemove)
+                if (appData.Podcasts != null)
                 {
-                    
-                    podcast.Category = ""; 
+                    var podcastsToRemove = appData.Podcasts
+                        .Where(p => p.Category != null && p.Category.Equals(categoryToRemove.Name, StringComparison.OrdinalIgnoreCase))
+                        .ToList();
+
+                    foreach (var podcast in podcastsToRemove)
+                    {
+                        podcast.Category = "";
+                    }
                 }
 
-                
                 SaveToFile(appData);
             }
             else

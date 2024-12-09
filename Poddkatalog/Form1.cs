@@ -372,40 +372,47 @@ namespace PodcastCatalogue
 
         private void removeCategoryBtn_Click(object sender, EventArgs e)
         {
-            if (categoryListBox.SelectedItem != null)
+            try
             {
-                string selectedCategoryName = categoryListBox.SelectedItem.ToString();
-
-                var confirmationResult = MessageBox.Show(
-                    $"Tag bort '{selectedCategoryName}'?",
-                    "Confirm Deletion",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Warning);
-
-                if (confirmationResult == DialogResult.Yes)
+                if (categoryListBox.SelectedItem != null)
                 {
-                    var appData = poddRepository.ReadFromFile();
-                    var categoryToRemove = appData.Categories.FirstOrDefault(c => c.Name.Equals(selectedCategoryName, StringComparison.OrdinalIgnoreCase));
+                    string selectedCategoryName = categoryListBox.SelectedItem.ToString();
 
-                    if (categoryToRemove != null)
+                    var confirmationResult = MessageBox.Show(
+                        $"Tag bort '{selectedCategoryName}'?",
+                        "Confirm Deletion",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning);
+
+                    if (confirmationResult == DialogResult.Yes)
                     {
-                        poddRepository.RemoveCategory(categoryToRemove);
+                        var appData = poddRepository.ReadFromFile();
+                        var categoryToRemove = appData.Categories.FirstOrDefault(c => c.Name.Equals(selectedCategoryName, StringComparison.OrdinalIgnoreCase));
 
-                        RefreshCategoryListBox();
-                        RefreshComboBox();
-                        RefreshPodcastDataGrid();
+                        if (categoryToRemove != null)
+                        {
+                            poddRepository.RemoveCategory(categoryToRemove);
 
-                        MessageBox.Show("Kategori borttagen.");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Kategori finns ej.");
+                            RefreshCategoryListBox();
+                            RefreshComboBox();
+                            RefreshPodcastDataGrid();
+
+                            MessageBox.Show("Kategori borttagen.");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Kategori finns ej.");
+                        }
                     }
                 }
+                else
+                {
+                    MessageBox.Show("Välj en kategori.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Välj en kategori.");
+                MessageBox.Show("Kunde inte ta bort kategori");
             }
         }
 
